@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Conversation thesesSIC</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style>
+  :root { color-scheme: light; --bg:#f4f3f0; --surface:#fcfcfb; --border:#e2e0da; --text:#0b0b0b; --text2:#52514e; --muted:#7a7974; --accent:#2a78d6; --user:#eaf2fc; --code:#f0efeb; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --bg:#111110; --surface:#1a1a19; --border:#2e2e2c; --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5; --user:#16263a; --code:#232322; } }
+  :root[data-theme="dark"] { color-scheme: dark; --bg:#111110; --surface:#1a1a19; --border:#2e2e2c; --text:#f0efec; --text2:#c3c2b7; --muted:#8f8e86; --accent:#3987e5; --user:#16263a; --code:#232322; }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0 auto; max-width: 900px; padding: 32px 16px 80px; background: var(--bg); color: var(--text); font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header#title-block-header { display: none; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin: 28px 0 8px; color: var(--text2); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 36px 0 0; }
+  a { color: var(--accent); }
+  h2 + p > sub, sub { color: var(--muted); font-size: 12px; }
+  h2[id^="utilisateur"] + p, h2[id^="utilisateur"] ~ p:first-of-type { }
+  code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: .9em; }
+  pre { background: var(--code); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.45; }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { border-bottom: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 12px 0; font-size: 13px; }
+  details summary { cursor: pointer; color: var(--text2); font-weight: 600; }
+  details[open] summary { margin-bottom: 8px; }
+  .user { background: var(--user); border-radius: 10px; padding: 2px 16px 10px; margin-top: 12px; }
+  .user h2 { color: var(--text); }
+  nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; margin: 20px 0; font-size: 14px; }
+  nav.toc ol { margin: 6px 0 0; padding-left: 22px; }
+  @media (max-width: 600px) { body { font-size: 14px; } pre { font-size: 12px; } }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Conversation thesesSIC</h1>
+</header>
+<h1 id="conversation-thesessic">Conversation – thesesSIC</h1>
+<p>Export de la session Claude Code (messages de l’utilisateur, réponses
+de Claude et actions effectuées).</p>
+<nav class="toc"><strong>Demandes</strong><ol><li><a href="#utilisateur">exporter dans un fichier csv thesesSIC.csv les données du fichier</a></li><li><a href="#utilisateur-1">Yes, add variants</a></li><li><a href="#utilisateur-2">ajoute aussi les thèses avec un intitulés voisins</a></li><li><a href="#utilisateur-3">enregistre le script dans le dossier de travail</a></li><li><a href="#utilisateur-4">ajoute à l’extraction : STIC et toutes les « Sciences et technologies</a></li><li><a href="#utilisateur-5">ajoute aussi Télécommunications (STIC) et « Sciences et techniques de</a></li><li><a href="#utilisateur-6">crée un page html qui utilise D3.js pour analyser le contenu de</a></li><li><a href="#utilisateur-7">le répertoire de travail est déjà un répertoire web : supprime le</a></li><li><a href="#utilisateur-8">crée une nouvelle page qui représente les données sous la d’un</a></li><li><a href="#utilisateur-9">créer une nouvelle page pour analyser les relation entre : auteurs,</a></li><li><a href="#utilisateur-10">dans la page des relations :</a></li><li><a href="#utilisateur-11">crée une nouvelle page qui montre sous la forme d’une animation</a></li><li><a href="#utilisateur-12">dans evolution.html réseau des personnes :</a></li><li><a href="#utilisateur-13">dans evolution.html :</a></li><li><a href="#utilisateur-14">dans evolution.html :</a></li><li><a href="#utilisateur-15">re-ajoute “Réseau des personnes”</a></li><li><a href="#utilisateur-16">exporte l’ensemble de la conversation dans conversations.md</a></li></ol></nav>
+<hr />
+<div class="user"><h2 id="utilisateur">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 05:46:14</sub></p>
+<p>exporter dans un fichier csv thesesSIC.csv les données du fichier
+data/2026-11-17-02-00-01-datagouv-results.csv dont la colonne discipline
+à comme valeur : Sciences de l’information et de la communication</p>
+</div>
+<details>
+<summary>
+Actions (2)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Inspect CSV header and size</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> data <span class="kw">&amp;&amp;</span> <span class="fu">head</span> <span class="at">-c</span> 1500 data/2026-11-17-02-00-01-datagouv-results.csv <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="kw">&amp;&amp;</span> <span class="fu">wc</span> <span class="at">-l</span> data/2026-11-17-02-00-01-datagouv-results.csv</span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Filter rows by discipline into
+thesesSIC.csv</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">import csv, sys, collections</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">csv.field_size_limit(sys.maxsize)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">src=&#39;data/2026-11-17-02-00-01-datagouv-results.csv&#39;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">target=&quot;Sciences de l&#39;information et de la communication&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">c=collections.Counter(); n=0; kept=0</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">with open(src,newline=&#39;&#39;,encoding=&#39;utf-8-sig&#39;) as f, open(&#39;thesesSIC.csv&#39;,&#39;w&#39;,newline=&#39;&#39;,encoding=&#39;utf-8-sig&#39;) as o:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">    r=csv.DictReader(f); w=csv.DictWriter(o,fieldnames=r.fieldnames,quoting=csv.QUOTE_ALL)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">    w.writeheader()</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">    for row in r:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">        n+=1</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">        d=row[&#39;discipline&#39;] or &#39;&#39;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">        if &#39;information&#39; in d.lower() and &#39;communication&#39; in d.lower(): c[d]+=1</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude">🤖 Claude</h2>
+<p>J’ai créé <a href="thesesSIC.csv">thesesSIC.csv</a> (13 Mo). Il
+contient les <strong>2 406 thèses</strong> sur 487 645 dont la colonne
+<code>discipline</code> vaut exactement « Sciences de l’information et
+de la communication ». Toutes les colonnes du fichier d’origine sont
+conservées, et le fichier est en UTF-8 avec BOM, comme la source.</p>
+<p>Le fichier d’origine contient aussi des variantes du même intitulé
+que je n’ai pas incluses :</p>
+<ul>
+<li>135 « Sciences de l’Information et de la Communication »
+(majuscules)</li>
+<li>52 + 15 avec une apostrophe typographique ’</li>
+<li>44 « Science de l’information… » (sans s)</li>
+<li>13 « Sciences de l’Information et de la communication »</li>
+<li>11 « Sciences de l’information et communication »</li>
+<li>7 « Sciences de l’Information de la Communication »</li>
+</ul>
+<p>Les intitulés voisins mais distincts, comme « Information et
+communication », « Sciences de l’information, de la communication et de
+la documentation » ou « STIC… », ne sont pas non plus inclus.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-1">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 05:47:50</sub></p>
+<p>Yes, add variants</p>
+</div>
+<details>
+<summary>
+Actions (1)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Re-export including discipline label
+variants</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">import csv, sys, collections, re</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">csv.field_size_limit(sys.maxsize)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">src=&#39;data/2026-11-17-02-00-01-datagouv-results.csv&#39;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">ok={&quot;sciences de l&#39;information et de la communication&quot;,&quot;science de l&#39;information et de la communication&quot;,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &quot;sciences de l&#39;information et communication&quot;,&quot;sciences de l&#39;information de la communication&quot;}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">norm=lambda s: re.sub(r&#39;\s+&#39;,&#39; &#39;,s.replace(&#39;’&#39;,&quot;&#39;&quot;).strip().lower())</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">c=collections.Counter(); kept=0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">with open(src,newline=&#39;&#39;,encoding=&#39;utf-8-sig&#39;) as f, open(&#39;thesesSIC.csv&#39;,&#39;w&#39;,newline=&#39;&#39;,encoding=&#39;utf-8-sig&#39;) as o:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">    r=csv.DictReader(f); w=csv.DictWriter</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-1">🤖 Claude</h2>
+<p>J’ai refait l’export : <a href="thesesSIC.csv">thesesSIC.csv</a>
+contient maintenant <strong>2 690 thèses</strong>, contre 2 406 avant.
+En plus de l’intitulé exact, il inclut ses variantes d’écriture :</p>
+<table>
+<thead>
+<tr>
+<th>Nb</th>
+<th>Intitulé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 406</td>
+<td>Sciences de l’information et de la communication</td>
+</tr>
+<tr>
+<td>135</td>
+<td>Sciences de l’Information et de la Communication</td>
+</tr>
+<tr>
+<td>52</td>
+<td>Sciences de l’information et de la communication</td>
+</tr>
+<tr>
+<td>44</td>
+<td>Science de l’information et de la communication</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Sciences de l’Information et de la Communication</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Sciences de l’Information et de la communication</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Sciences de l’information et communication</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Sciences de l’Information de la Communication</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Science de l’Information et de la communication</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Science de l’information et de la communication</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Sciences de l’information et de la Communication</td>
+</tr>
+</tbody>
+</table>
+<p>Les valeurs de la colonne <code>discipline</code> sont restées telles
+quelles, sans harmonisation. Les intitulés voisins mais différents
+restent exclus, comme « Information et communication », « …et de la
+documentation » ou « STIC… ».</p>
+<hr />
+<div class="user"><h2 id="utilisateur-2">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 05:49:37</sub></p>
+<p>ajoute aussi les thèses avec un intitulés voisins</p>
+</div>
+<details>
+<summary>
+Actions (3)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — List disciplines related to info-com</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span> <span class="op">&gt;</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/disc.txt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">import csv, sys, collections, re</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">csv.field_size_limit(sys.maxsize)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">c=collections.Counter()</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">with open(&#39;data/2026-11-17-02-00-01-datagouv-results.csv&#39;,newline=&#39;&#39;,encoding=&#39;utf-8-sig&#39;) as f:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">    for row in csv.DictReader(f):</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">        d=row[&#39;discipline&#39;] or &#39;&#39;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">        l=d.lower()</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">        if &#39;communication&#39; in l or &#39;informat&#39; in l and (&#39;scien&#39; in l and &#39;documentation&#39; in l or &#39;bibliothé&#39; in l) or &#39;documentation&#39; in l or &#39;médias&#39; in l or &#39;medias&#39; in l or &#39;jour</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Re-export with neighbouring info-com
+labels</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/export.py <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">import csv, sys, collections, re</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">csv.field_size_limit(sys.maxsize)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">norm=lambda s: re.sub(r&#39;\s+&#39;,&#39; &#39;,s.replace(&#39;’&#39;,&quot;&#39;&quot;).strip().lower())</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">core=re.compile(r&quot;information,? (et )?(de la )?communication|information[- ]communication|information de la documentation|information et de la documentation&quot;)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">core_ex=re.compile(r&quot;technologies? de l|techniques de l|technologie de l|réseaux|stic|ingénierie|énergétique|biostat|télécom|électron&quot;)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">other=re.compile(r&quot;communicatio</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Exclude technical false positives and
+re-export</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">S</span><span class="op">=</span>/private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/export.py <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> <span class="at">-</span> <span class="st">&quot;</span><span class="va">$S</span><span class="st">&quot;</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">import sys</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">p=sys.argv[1]; s=open(p).read()</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(&#39;def keep(d):\n    n=norm(d)\n&#39;,&#39;fp=re.compile(r&quot;^signaux|énergétique|laser|acoustique|technologiesde|quantique|robotique|systèmes d\&#39;information communicants|radiocommunication|^information, communications$|^image, information&quot;)\ndef keep(d):\n    n=norm(d)\n    if fp.search(n): return False\n&#39;)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="va">$S</span> data/2026-11-17-02-00-01-datagouv-results.csv thesesSIC.csv</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">…</span></span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-2">🤖 Claude</h2>
+<p>J’ai refait l’export : <a href="thesesSIC.csv">thesesSIC.csv</a>
+contient maintenant <strong>3 108 thèses</strong>, contre 2 690 avant. «
+Voisin » est un critère subjectif : j’ai donc choisi les intitulés à la
+main dans la liste complète des disciplines, et ce choix mérite un coup
+d’œil de votre part.</p>
+<p><strong>Ce qui est inclus :</strong></p>
+<ul>
+<li><strong>L’intitulé SIC et ses variantes</strong>, y compris celles
+avec des fautes de frappe (« communicationt », « infomation »…).</li>
+<li><strong>Les autres formulations d’info-com</strong> : « Information
+et communication » (60 + 4), « Information-communication », « Sciences
+information et communication » (36), « Sciences de la communication »
+(30), « Communication » (33).</li>
+<li><strong>Les intitulés qui ajoutent la documentation</strong> : «
+Sciences de l’information, de la communication et de la documentation »
+(41) et « Sciences de l’information et de la documentation ».</li>
+<li><strong>Les intitulés SIC avec une spécialité</strong> : Muséologie,
+Design, Médiation des cultures, COSTECH, Cinéma…</li>
+<li><strong>Les doubles disciplines contenant SIC</strong> : Éducation,
+Droit, Histoire, Philosophie, Sciences du langage, Littérature…</li>
+<li><strong>Les disciplines voisines</strong> : Linguistique/Sémiotique
+et Communication, Communication arts et spectacles, Lettres arts
+communication et sciences du langage, Sociologie de la communication,
+Sémiologie des médias, Culture des médias, Hypermédias, Droit de la
+communication, Science politique et Communication…</li>
+</ul>
+<p><strong>Ce qui est exclu, parce que c’est technique ou hors sujet
+:</strong></p>
+<ul>
+<li>STIC et toutes les « Sciences et technologies de l’information et de
+la communication »</li>
+<li>Télécommunications, électronique, réseaux, traitement du signal,
+lasers, robotique</li>
+<li>« Image, information, hypermédia » (34 thèses) : je l’ai exclu parce
+que je pense que c’est une spécialité d’informatique, mais je ne l’ai
+pas vérifié.</li>
+<li>Les neurosciences et la biologie (« communication cellulaire »)</li>
+</ul>
+<p>Si vous voulez ajouter ou retirer certains de ces intitulés,
+dites-le-moi et je relance l’export. Le script qui fait le filtrage est
+enregistré dans un dossier temporaire :
+<code>/private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/export.py</code>.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-3">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 05:53:11</sub></p>
+<p>enregistre le script dans le dossier de travail</p>
+</div>
+<details>
+<summary>
+Actions (2)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Copy filter script into project
+folder</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/export.py export_theses_sic.py <span class="kw">&amp;&amp;</span> <span class="fu">cat</span> export_theses_sic.py</span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Add usage docstring and check syntax</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;export_theses_sic.py&#39;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">h=&#39;&#39;&#39;&quot;&quot;&quot;Extrait d&#39;un export theses.fr (data.gouv) les theses en Sciences de l&#39;information</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">et de la communication (SIC), avec les variantes d&#39;intitule et les disciplines voisines.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">Usage :</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">    python3 export_theses_sic.py data/2026-11-17-02-00-01-datagouv-results.csv thesesSIC.csv</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">Affiche le nombre de theses retenues et le detail par intitule de discipline.</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;&#39;&#39;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(h+open(p).read())</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;import ast;ast.parse(open(&#39;export_theses_sic.py&#39;).read())&quot;</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> ok</span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-3">🤖 Claude</h2>
+<p>J’ai enregistré le script dans le dossier de travail : <a
+href="export_theses_sic.py">export_theses_sic.py</a>. Je lui ai ajouté
+un en-tête qui explique son utilisation. Je n’ai pas relancé le script
+après cet ajout, mais j’ai vérifié qu’il n’a pas d’erreur de
+syntaxe.</p>
+<p>Pour relancer l’export :</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> export_theses_sic.py data/2026-11-17-02-00-01-datagouv-results.csv thesesSIC.csv</span></code></pre></div>
+<p>Il affiche le nombre de thèses retenues et le détail par intitulé de
+discipline. Le fichier n’est pas encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-4">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 05:54:52</sub></p>
+<p>ajoute à l’extraction : STIC et toutes les « Sciences et technologies
+de l’information et de la communication », « Image, information,
+hypermédia »</p>
+</div>
+<details>
+<summary>
+Actions (3)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Add STIC and
+Image-information-hypermedia, re-export</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;export_theses_sic.py&#39;; s=open(p).read()</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(&#39;def keep(d):\n    n=norm(d)\n&#39;,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;&#39;&#39;# Ajouts explicites : STIC, Sciences et technologies de l&#39;information et de la communication,</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Image, information, hypermedia</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">force=re.compile(r&quot;^stic\\b|sciences? et technologies? ?de l&#39; ?information,? et de la communication|^image, information,? (et )?hypermédia&quot;)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">def keep(d):</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">    n=norm(d)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">    if force.search(n): return True</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;&#39;&#39;,1)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(&quot;de l&#39;information et de la communication (SIC), avec les variantes d&#39;intitule et les disciplines voisines.&quot;,</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;de l&#39;information et de la commu</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Inspect output and script header</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/out.txt <span class="kw">|</span> <span class="fu">head</span><span class="kw">;</span> <span class="fu">sed</span> <span class="at">-n</span> 1,30p export_theses_sic.py<span class="kw">;</span> <span class="fu">ls</span> <span class="at">-la</span> thesesSIC.csv</span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Rebuild script from scratchpad copy and
+re-export</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">S</span><span class="op">=</span>/private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad <span class="kw">&amp;&amp;</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="va">$S</span>/export.py <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> <span class="at">-</span> <span class="st">&quot;</span><span class="va">$S</span><span class="st">/export.py&quot;</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">import sys</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">body=open(sys.argv[1]).read()</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">h=&#39;&#39;&#39;&quot;&quot;&quot;Extrait d&#39;un export theses.fr (data.gouv) les theses en Sciences de l&#39;information</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">et de la communication (SIC), avec les variantes d&#39;intitule, les disciplines voisines,</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">les STIC et &quot;Image, information, hypermedia&quot;.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">Usage :</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="st">    python3 export_theses_sic.py data/2026-11-17-02-00-01-datagouv-results.csv thesesSIC.csv</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="st">Affiche le nombre de theses retenues et le detail par intit</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-4">🤖 Claude</h2>
+<p>J’ai ajouté les intitulés demandés : <a
+href="thesesSIC.csv">thesesSIC.csv</a> contient maintenant <strong>3 920
+thèses</strong>, contre 3 108 avant.</p>
+<p><strong>Un problème à signaler :</strong> la version de <a
+href="export_theses_sic.py">export_theses_sic.py</a> que je vous ai
+donnée à l’étape précédente était cassée. En ajoutant l’en-tête, j’ai
+effacé tout le code : le fichier ne contenait plus que l’en-tête. Je
+l’ai reconstruit à partir de la copie restée dans le dossier temporaire,
+et le script complet a bien produit l’export ci-dessus.</p>
+<p><strong>Ce qui a été ajouté :</strong></p>
+<ul>
+<li><strong>Tous les intitulés qui commencent par « STIC »</strong>, y
+compris les spécialités comme STIC Informatique, STIC Santé ou STIC
+Traitement de l’information.</li>
+<li><strong>Toutes les formes de « Sciences et technologies de
+l’information et de la communication »</strong> : singulier ou pluriel,
+apostrophe ’, avec une spécialité (signal, informatique, électronique…),
+ou précédé de « Mathématiques et… ».</li>
+<li><strong>« Image, information, hypermédia » et ses variantes</strong>
+(34 thèses).</li>
+</ul>
+<p><strong>Ce qui reste exclu, sauf si vous voulez l’ajouter
+:</strong></p>
+<ul>
+<li>« Télécommunications (STIC) » (53 thèses), parce que l’intitulé ne
+commence pas par STIC.</li>
+<li>« Sciences et techniques de l’information et de la communication »
+(une dizaine de thèses), parce que c’est « techniques » et non «
+technologies ».</li>
+</ul>
+<p>Le fichier n’est toujours pas enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-5">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:02:13</sub></p>
+<p>ajoute aussi Télécommunications (STIC) et « Sciences et techniques de
+l’information et de la communication »</p>
+</div>
+<details>
+<summary>
+Actions (1)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Add Télécommunications (STIC) and
+techniques labels, re-export</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;export_theses_sic.py&#39;; s=open(p).read()</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="st">old=r&#39;&#39;&#39;force=re.compile(r&quot;^stic\b|sciences? et technologies? ?de l&#39; ?information&#39;&#39;&#39;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">new=r&#39;&#39;&#39;force=re.compile(r&quot;^stic\b|^télécommunications \(stic\)|sciences? et (technologies?|techniques?) ?de l&#39; ?information&#39;&#39;&#39;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">assert old in s</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(old,new).replace(&quot;# Ajouts explicites : STIC,&quot;,&quot;# Ajouts explicites : STIC, Telecommunications (STIC), Sciences et techniques de l&#39;information et de la communication,&quot;)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="va">S</span><span class="op">=</span>/private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="ex">…</span></span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-5">🤖 Claude</h2>
+<p>J’ai ajouté les deux intitulés : <a
+href="thesesSIC.csv">thesesSIC.csv</a> contient maintenant <strong>3 987
+thèses</strong>, contre 3 920 avant.</p>
+<ul>
+<li><strong>53</strong> « Télécommunications (STIC) »</li>
+<li><strong>14</strong> « Sciences et techniques de l’information et de
+la communication » sous toutes ses formes : traitement de l’information,
+informatique, signal et image, acoustique, ainsi qu’une variante
+commençant par « Doctorat en… »</li>
+</ul>
+<p>J’ai aussi mis à jour <a
+href="export_theses_sic.py">export_theses_sic.py</a> avec ces deux
+règles. Le fichier n’est toujours pas enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-6">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:04:54</sub></p>
+<p>crée un page html qui utilise D3.js pour analyser le contenu de
+thesesSIC.csv</p>
+</div>
+<details>
+<summary>
+Actions (6)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — List well-filled columns with sample
+values</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">import csv,sys,collections</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">csv.field_size_limit(sys.maxsize)</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">rows=list(csv.DictReader(open(&#39;thesesSIC.csv&#39;,encoding=&#39;utf-8-sig&#39;)))</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">print(len(rows), len(rows[0]))</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">fill={k:sum(1 for r in rows if r[k]) for k in rows[0]}</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">for k,v in fill.items():</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">    if v&gt;200: print(v,k, repr(rows[0][k][:80]))</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div></li>
+<li><p><strong>Skill</strong> — dataviz</p></li>
+<li><p><strong>Bash</strong> — Read palette and interaction
+references</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /private/tmp/claude-501/bundled-skills/2.1.326/cfb150494edf105ebf839b85717dc981/dataviz <span class="kw">&amp;&amp;</span> <span class="fu">cat</span> references/palette.md <span class="kw">|</span> <span class="fu">head</span> <span class="at">-120</span> <span class="kw">&amp;&amp;</span> <span class="fu">sed</span> <span class="at">-n</span> 1,80p references/interaction.md</span></code></pre></div></li>
+<li><p><strong>Write</strong> —
+/Users/samszo/Sites/thesesSIC/index.html</p></li>
+<li><p><strong>Bash</strong> — Fix bar CSS selectors and add local
+server config</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">&#39;&#39;</span> <span class="st">&#39;s/\.barlist \.row rect\.bar/.barlist .row path.bar/; s/\.barlist \.row:hover rect\.bar, \.barlist \.row:focus rect\.bar/.barlist .row:hover path.bar, .barlist .row:focus path.bar/; s/\.barlist \.row\.active rect\.bar/.barlist .row.active path.bar/&#39;</span> index.html <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;index.html&#39;; s=open(p).read()</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">old=&#39;&#39;&#39;    .attr(&quot;fill&quot;, d =&gt; state.facets[key] === d[0] ? css(&quot;--series-2&quot;) : css(&quot;--bar&quot;));</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">  g.append(&quot;text&quot;).attr(&quot;class&quot;, &quot;val&quot;)&#39;&#39;&#39;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">assert old in s</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(old,&#39;&#39;&#39;    ;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">  g.append(&quot;text&quot;).attr(&quot;class&quot;, &quot;val&quot;)&#39;&#39;&#39;)</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">&quot;path.bar&quot;</span> index.htm</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="ex">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:preview_start</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-6">🤖 Claude</h2>
+<p>Page écrite, je la vérifie dans le navigateur.</p>
+<details>
+<summary>
+Actions (8)
+</summary>
+<ul>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:read_console_messages</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>Bash</strong> — Spread network layout and halo labels</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;index.html&#39;; s=open(p).read()</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">reps=[</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;.net text { fill: var(--text-secondary); font-size: 11px; pointer-events: none; }&#39;,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st"> &#39;.net text { fill: var(--text-primary); font-size: 11px; pointer-events: none; paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round; }&#39;),</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;nodes.filter((n, i) =&gt; i &lt; 25)&#39;,&#39;nodes.filter((n, i) =&gt; i &lt; 15)&#39;),</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;.distance(70).strength(l =&gt; Math.min(1, l.w / 20)))&#39;,&#39;.distance(110).strength(l =&gt; Math.min(0.6, l.w / 30)))&#39;),</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;d3.forceManyBody().strength(-160))&#39;,&#39;d3.forceManyBody().strength(-320))\n    .force(&quot;x&quot;, d3.forc</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-7">🤖 Claude</h2>
+<p>La page fonctionne, je termine.</p>
+<h2 id="claude-8">🤖 Claude</h2>
+<p>J’ai créé <a href="index.html">index.html</a>, une page qui analyse
+<code>thesesSIC.csv</code> avec D3.js. Je l’ai ouverte dans le
+navigateur intégré : elle charge les 3 987 thèses sans erreur, et
+filtrer sur un établissement, puis tout réinitialiser, fonctionne.</p>
+<p><strong>Contenu de la page :</strong></p>
+<ul>
+<li><strong>Chiffres clés</strong> : nombre de thèses, établissements,
+directeurs·rices, période et part des thèses accessibles en ligne.</li>
+<li><strong>Filtres</strong> : par groupe (SIC, Voisines, STIC),
+recherche plein texte (titre, auteur, direction, mots-clés), et une
+étiquette pour chaque filtre actif, qu’on retire d’un clic.</li>
+<li><strong>Frise des soutenances par année</strong>, en barres empilées
+par groupe. On sélectionne une période en glissant dessus, et le survol
+affiche le détail de l’année.</li>
+<li><strong>Six classements des 15 premiers</strong> : établissements,
+directeurs·rices, sujets RAMEAU, mots-clés auteur, écoles doctorales et
+laboratoires partenaires. Cliquer sur une barre filtre toute la
+page.</li>
+<li><strong>Réseau des 40 sujets RAMEAU les plus fréquents</strong> :
+deux sujets sont reliés quand au moins 3 thèses les partagent. On peut
+déplacer les nœuds, et cliquer sur un nœud filtre la page.</li>
+<li><strong>Tableau des thèses</strong> : les 300 plus récentes de la
+sélection, avec un lien vers theses.fr pour chacune.</li>
+</ul>
+<p>Les thèses sont classées en trois groupes, SIC, Voisines et STIC, à
+partir de l’intitulé de leur discipline, selon les mêmes règles que le
+script d’extraction.</p>
+<p>La page doit être servie par un serveur local, car un navigateur ne
+lit pas le CSV depuis un fichier ouvert directement. Si on l’ouvre quand
+même en direct, elle propose de choisir le CSV à la main. Pour la lancer
+:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> http.server 8765</span></code></pre></div>
+<p>puis ouvrez http://localhost:8765. J’ai aussi ajouté une
+configuration dans <code>.claude/launch.json</code> pour l’aperçu dans
+l’app.</p>
+<p>Rien n’est encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-7">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:09:31</sub></p>
+<p>le répertoire de travail est déjà un répertoire web : supprime le
+server python</p>
+</div>
+<details>
+<summary>
+Actions (2)
+</summary>
+<ul>
+<li><p><strong>navigateur:preview_stop</strong> —</p></li>
+<li><p><strong>Bash</strong> — Remove launch config, update hint, check
+port</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> .claude/launch.json <span class="kw">&amp;&amp;</span> <span class="fu">rmdir</span> .claude <span class="dv">2</span><span class="op">&gt;</span>/dev/null<span class="kw">;</span> <span class="fu">ls</span> <span class="at">-a</span><span class="kw">;</span> <span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;index.html&#39;; s=open(p).read()</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">a=&#39;(ouvrez la page via un serveur local, ex. &lt;code&gt;python3 -m http.server&lt;/code&gt;)&#39;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">assert a in s</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(a,&#39;(ouvrez la page via le serveur web)&#39;)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">lsof</span> <span class="at">-iTCP:8765</span> <span class="at">-sTCP:LISTEN</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;port 8765 libre&quot;</span></span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-9">🤖 Claude</h2>
+<p>J’ai supprimé le serveur Python :</p>
+<ul>
+<li><strong>Serveur arrêté</strong> : le port 8765 est libéré.</li>
+<li><strong>Configuration supprimée</strong> : j’ai effacé
+<code>.claude/launch.json</code> et le dossier <code>.claude</code>, qui
+était vide.</li>
+<li><strong>Message de <a href="index.html">index.html</a>
+modifié</strong> : celui qui s’affiche quand le CSV ne se charge pas ne
+mentionne plus <code>python3 -m http.server</code> et dit simplement
+d’ouvrir la page via le serveur web.</li>
+</ul>
+<p>La page charge <code>thesesSIC.csv</code> depuis le même dossier
+qu’elle, elle fonctionne donc telle quelle via votre serveur web. Je
+n’ai pas testé l’adresse de votre serveur.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-8">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:12:55</sub></p>
+<p>crée une nouvelle page qui représente les données sous la d’un
+Brushable parallel coordinates cf. https://observablehq.com/<span
+class="citation"
+data-cites="d3/brushable-parallel-coordinates">@d3/brushable-parallel-coordinates</span></p>
+</div>
+<details>
+<summary>
+Actions (7)
+</summary>
+<ul>
+<li><p><strong>Write</strong> —
+/Users/samszo/Sites/thesesSIC/parallele.html</p></li>
+<li><p><strong>Bash</strong> — Refine selection redraw, add nav link,
+find web server URL</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;parallele.html&#39;; s=open(p).read()</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">reps=[</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;&#39;&#39;  lg.append(&quot;span&quot;).html(&quot;&quot;).append(&quot;span&quot;).attr(&quot;class&quot;, &quot;sw&quot;).style(&quot;background&quot;, css(&quot;--off&quot;));</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">  lg.select(&quot;span:last-child&quot;).append(&quot;span&quot;).text(&quot;hors sélection&quot;);&#39;&#39;&#39;,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;&#39;&#39;  const o = lg.append(&quot;span&quot;);</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">  o.append(&quot;span&quot;).attr(&quot;class&quot;, &quot;sw&quot;).style(&quot;background&quot;, css(&quot;--off&quot;));</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="st">  o.append(&quot;span&quot;).text(&quot;hors sélection&quot;);&#39;&#39;&#39;),</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;&#39;&#39;      .on(&quot;start brush end&quot;, ({ selection }) =&gt; {</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">        if (selection) brushes.set(dim.key, selection); else brushes.delete(dim.key);</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="st">        applySelection();&#39;&#39;&#39;,&#39;&#39;&#39;      .on(&quot;start brush end&quot;, ({ t</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:read_console_messages</strong> —</p></li>
+<li><p><strong>Bash</strong> — Fix axis title anchoring and add text
+halo</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;parallele.html&#39;; s=open(p).read()</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">reps=[</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;.attr(&quot;class&quot;, &quot;title&quot;).attr(&quot;x&quot;, m.l).attr(&quot;y&quot;, -9)&#39;,&#39;.attr(&quot;class&quot;, &quot;title&quot;).attr(&quot;text-anchor&quot;, &quot;start&quot;).attr(&quot;x&quot;, m.l).attr(&quot;y&quot;, -12)&#39;),</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;.axis .title { fill: var(--text-primary); font-size: 12px; font-weight: 600; }&#39;,</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st"> &#39;.axis .title { fill: var(--text-primary); font-size: 12px; font-weight: 600; }\n.axis text { paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round; }&#39;),</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;const gap = 64,&#39;,&#39;const gap = 74,&#39;),</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">]</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="st">for a,b in reps:</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="st">    assert a in s, a[:40]</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="st">    s=s.replace(a,b)</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-10">🤖 Claude</h2>
+<p>Dernier petit correctif sur la légende des années, puis je
+termine.</p>
+<details>
+<summary>
+Actions (3)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Format year legend without thousands
+separator</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;parallele.html&#39;; s=open(p).read()</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">a=&#39;&#39;&#39;    s.append(&quot;span&quot;).text(nf(col.domain[0]));&#39;&#39;&#39;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="st">b=&#39;&#39;&#39;    const lf = colorKey === &quot;annee&quot; ? String : nf;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="st">    s.append(&quot;span&quot;).text(lf(col.domain[0]));&#39;&#39;&#39;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="st">assert a in s; s=s.replace(a,b)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="st">a=&#39;&#39;&#39;s.append(&quot;span&quot;).text(nf(col.domain[1]) + &#39;&#39;&#39;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="st">assert a in s; s=s.replace(a,&#39;&#39;&#39;s.append(&quot;span&quot;).text(lf(col.domain[1]) + &#39;&#39;&#39;)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-11">🤖 Claude</h2>
+<p>J’ai créé <a href="parallele.html">parallele.html</a>, une vue en
+coordonnées parallèles des thèses inspirée de l’exemple Observable.
+Comme dans cet exemple, les axes sont horizontaux et empilés : les
+intitulés longs restent lisibles. Je l’ai testée sur
+http://localhost/thesesSIC/parallele.html. Elle charge les 3 987 thèses
+sans erreur. Une sélection sur l’axe des années, de 2018 à 2026, en
+garde 1 212, et le changement de couleur fonctionne.</p>
+<p><strong>Les 11 axes</strong> (chaque ligne est une thèse) :</p>
+<ol type="1">
+<li>Année de soutenance</li>
+<li>Groupe de disciplines : SIC, Voisines ou STIC</li>
+<li>Établissement : les 12 plus fréquents, les autres regroupés sous «
+Autres »</li>
+<li>Nombre de directeurs·rices</li>
+<li>Membres du jury</li>
+<li>Sujets RAMEAU</li>
+<li>Mots-clés auteur</li>
+<li>Longueur du titre, en mots</li>
+<li>Longueur du résumé, en mots</li>
+<li>Cotutelle (oui/non)</li>
+<li>Accessible en ligne (oui/non)</li>
+</ol>
+<p>Les deux longueurs, titre et résumé, sont plafonnées au 99e centile :
+quelques valeurs extrêmes écraseraient sinon l’axe, et les thèses
+au-delà sont placées en bout d’axe.</p>
+<p><strong>Interactions :</strong></p>
+<ul>
+<li><strong>Sélection</strong> : on glisse le long d’un axe pour
+sélectionner un intervalle, et on peut combiner plusieurs axes. Les
+thèses hors sélection passent en gris, et celles qui restent
+sélectionnées sont redessinées au premier plan quand on relâche la
+souris.</li>
+<li><strong>Couleur</strong> : un menu permet de colorer les lignes
+selon le groupe, l’année, la taille du jury, la longueur du résumé ou
+l’accessibilité.</li>
+<li><strong>Compteur et tableau</strong> : un compteur indique le nombre
+de thèses sélectionnées, et un tableau liste les 300 plus récentes, avec
+un lien vers theses.fr.</li>
+<li><strong>Effacer les sélections</strong> : un bouton efface toutes
+les sélections. Redimensionner la fenêtre les efface aussi.</li>
+</ul>
+<p>J’ai aussi ajouté un lien entre <a href="index.html">index.html</a>
+et la nouvelle page, dans les deux sens. Rien n’est encore enregistré
+dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-9">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:17:59</sub></p>
+<p>créer une nouvelle page pour analyser les relation entre : auteurs,
+directeurs_these, membres_jury</p>
+</div>
+<details>
+<summary>
+Actions (6)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Inspect jury columns and overlaps</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">import csv,sys,collections</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">csv.field_size_limit(sys.maxsize)</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">rows=list(csv.DictReader(open(&#39;thesesSIC.csv&#39;,encoding=&#39;utf-8-sig&#39;)))</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="st">h=rows[0].keys()</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="st">print([k for k in h if k.startswith((&#39;membres_jury&#39;,&#39;rapporteurs&#39;,&#39;president&#39;))][-6:])</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="st"># director also in jury?</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="st">both=0; tot=0; authdir=0</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="st">dirids=set(); authids=set()</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="st">for r in rows:</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="st">    d={r[f&#39;directeurs_these.{i}.idref&#39;] for i in range(7) if r.get(f&#39;directeurs_these.{i}.idref&#39;)}</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="st">    j={r[k] for k in h if k.startswith(&#39;membres_jury&#39;) and k.endswith(&#39;idref&#39;) and r[k]}</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="st">    p={r[k] for k in h if (k.startswith(&#39;rapporteurs&#39;) or k.starts</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>Write</strong> —
+/Users/samszo/Sites/thesesSIC/relations.html</p></li>
+<li><p><strong>Bash</strong> — Add navigation links to the relations
+page</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="st">for p,a,b in [(&#39;index.html&#39;,&#39;&lt;a href=&quot;parallele.html&quot;&gt;Coordonnées parallèles →&lt;/a&gt;&#39;,&#39;&lt;a href=&quot;parallele.html&quot;&gt;Coordonnées parallèles →&lt;/a&gt; · &lt;a href=&quot;relations.html&quot;&gt;Relations →&lt;/a&gt;&#39;),</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="st">              (&#39;parallele.html&#39;,&#39;&lt;nav&gt;&lt;a href=&quot;index.html&quot;&gt;← Tableau de bord&lt;/a&gt;&lt;/nav&gt;&#39;,&#39;&lt;nav&gt;&lt;a href=&quot;index.html&quot;&gt;← Tableau de bord&lt;/a&gt; · &lt;a href=&quot;relations.html&quot;&gt;Relations →&lt;/a&gt;&lt;/nav&gt;&#39;)]:</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">    s=open(p).read(); assert a in s, p; open(p,&#39;w&#39;).write(s.replace(a,b))</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-12">🤖 Claude</h2>
+<p>La page fonctionne, je vérifie visuellement la fiche personne.</p>
+<details>
+<summary>
+Actions (2)
+</summary>
+<ul>
+<li><p><strong>navigateur:computer</strong> —</p></li>
+<li><p><strong>Bash</strong> — Widen spacing between tree
+generations</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">&#39;&#39;</span> <span class="st">&#39;s/const dx = 18, dy = 190;/const dx = 18, dy = 240;/&#39;</span> relations.html <span class="kw">&amp;&amp;</span> <span class="fu">grep</span> <span class="at">-n</span> <span class="st">&quot;dy = 240&quot;</span> relations.html</span></code></pre></div></li>
+</ul>
+</details>
+<h2 id="claude-13">🤖 Claude</h2>
+<p>J’ai créé <a href="relations.html">relations.html</a>, une page qui
+analyse les relations entre auteur·rices, directeur·rices et membres de
+jury. Je l’ai testée sur http://localhost/thesesSIC/relations.html :
+elle se charge sans erreur, et la fiche personne fonctionne, testée avec
+Bernard Miège (59 thèses dirigées, 126 personnes dans sa
+descendance).</p>
+<p><strong>Choix de construction :</strong></p>
+<ul>
+<li><strong>Identification des personnes</strong> : par leur IdRef.
+Quand l’IdRef manque, la page cherche le même nom ailleurs dans le
+corpus avec un IdRef unique, et sinon garde le nom seul.</li>
+<li><strong>Le rôle « jury »</strong> regroupe les membres du jury, la
+présidence et les rapporteur·rices. C’est nécessaire parce que la
+plupart des présidences et rapporteur·rices ne figurent pas dans
+<code>membres_jury</code>. Une personne qui dirige une thèse n’est pas
+comptée dans le jury de cette même thèse.</li>
+</ul>
+<p><strong>Contenu de la page :</strong></p>
+<ul>
+<li><strong>Filtres</strong> : groupe (SIC, Voisines, STIC), plage
+d’années, et recherche d’une personne par son nom.</li>
+<li><strong>Chiffres clés</strong> : 9 799 personnes distinctes, 1 947
+directeur·rices et 5 078 membres de jury. Parmi les docteur·es du
+corpus, 205 sont ensuite devenu·es directeur·rices et 340 membres de
+jury.</li>
+<li><strong>Réseau des personnes les plus actives</strong> : on règle le
+nombre de personnes, le seuil de thèses en commun et les types de liens
+affichés (direction vers docteur·e, co-direction, direction ↔︎ jury). On
+peut zoomer et déplacer les nœuds. La couleur indique le rôle
+principal.</li>
+<li><strong>Fiche personne</strong>, qui s’ouvre au clic sur n’importe
+quel nom :
+<ul>
+<li>lien vers IdRef et nombre de thèses par rôle ;</li>
+<li>arbre de descendance scientifique, avec les docteur·es puis leurs
+propres docteur·es, sur 5 générations au plus ;</li>
+<li>ascendance, c’est-à-dire qui a dirigé la thèse de la personne ;</li>
+<li>collaborateur·rices les plus fréquent·es ;</li>
+<li>liste de ses thèses avec son rôle dans chacune.</li>
+</ul></li>
+<li><strong>Classements</strong> : profils de rôles (combinaisons
+docteur·e / direction / jury), directeur·rices, membres de jury et
+lignées les plus nombreuses.</li>
+<li><strong>« Qui invite qui ? »</strong> : les couples directeur·rice →
+membre du jury qui reviennent le plus souvent.</li>
+</ul>
+<p><strong>Limites :</strong></p>
+<ul>
+<li><strong>Corpus restreint</strong> : la filiation n’utilise que les
+thèses de ce fichier. Une personne qui a soutenu avant 1985 ou dans une
+autre discipline n’aura donc pas d’ascendance.</li>
+<li><strong>Homonymes</strong> : sans IdRef, deux homonymes peuvent être
+confondus.</li>
+<li><strong>Données à vérifier</strong> : quelques résultats viennent
+directement des données et peuvent surprendre. Par exemple, Francis
+Balle apparaît comme directeur entre 2011 et 2023 ; ce serait à vérifier
+dans la source.</li>
+</ul>
+<p>Les trois pages ont maintenant des liens entre elles. Rien n’est
+encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-10">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:31:54</sub></p>
+<p>dans la page des relations :</p>
+<ul>
+<li>remplacer “Réseau des personnes les plus actives” par “Réseau des
+personnes”</li>
+<li>rendre accessible la totalité des personnes</li>
+</ul>
+</div>
+<details>
+<summary>
+Actions (6)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Locate network-related code in relations
+page</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">&#39;nmax\|Réseau des personnes\|\.net \|classed(&quot;sel&quot;\|filter((\[, c\]) =&gt; c &gt; 1)&#39;</span> relations.html</span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Replace network with canvas version
+supporting all people</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/net.js <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">// ---------- network (canvas, pour supporter toutes les personnes) ----------</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">let sim, netRender = () =&gt; {}, netFocus = () =&gt; {};</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">const act = p =&gt; p.aut.length + p.dir.length + p.jury.length;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">function drawNetwork() {</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">  const host = d3.select(&quot;#net&quot;); host.selectAll(&quot;*&quot;).remove();</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st">  if (sim) sim.stop();</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="st">  const { P, edges } = AGG;</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st">  const all = [...P.values()].sort((a, b) =&gt; act(b) - act(a));</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="st">  const total = all.length;</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="st">  const nmax = Math.min(state.nmax, total</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Add selected person to network and focus
+on search</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;relations.html&#39;; s=open(p).read()</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">reps=[</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;let sim, netRender = () =&gt; {}, netFocus = () =&gt; {};&#39;,&#39;let sim, netRender = () =&gt; {}, netFocus = () =&gt; {}, netHas = () =&gt; false;&#39;),</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;  const byId = new Map(nodes.map(n =&gt; [n.id, n]));\n&#39;,&#39;  const byId = new Map(nodes.map(n =&gt; [n.id, n]));\n  netHas = id =&gt; byId.has(id);\n&#39;),</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;  netRender();\n  d3.select(&quot;#who&quot;)&#39;,&#39;  if (netHas(id)) netRender(); else drawNetwork();\n  d3.select(&quot;#who&quot;)&#39;),</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;if (id) showPerson(id); });&#39;,&#39;if (id) { showPerson(id); setTimeout(() =&gt; netFocus(id), 900); } });&#39;),</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">]</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">for a,b in reps:</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">    assert a in s, a[:</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-14">🤖 Claude</h2>
+<p>Le réseau complet s’affiche ; je vérifie le rendu avec tous les
+liens.</p>
+<details>
+<summary>
+Actions (4)
+</summary>
+<ul>
+<li><p><strong>navigateur:computer</strong> —</p></li>
+<li><p><strong>Bash</strong> — Make “Toutes” also show single-thesis
+links</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;relations.html&#39;; s=open(p).read()</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">a=&#39;d3.select(&quot;#nall&quot;).on(&quot;click&quot;, () =&gt; { state.nmax = Infinity; drawNetwork(); });&#39;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">b=&#39;d3.select(&quot;#nall&quot;).on(&quot;click&quot;, () =&gt; { state.nmax = Infinity; state.wmin = 1; d3.select(&quot;#wmin&quot;).property(&quot;value&quot;, 1); drawNetwork(); });&#39;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">assert a in s; open(p,&#39;w&#39;).write(s.replace(a,b))</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-15">🤖 Claude</h2>
+<p>J’ai fait les deux modifications dans <a
+href="relations.html">relations.html</a> et je les ai testées dans le
+navigateur, sans erreur.</p>
+<p><strong>Titre :</strong> le bloc s’appelle maintenant « Réseau des
+personnes », avec à côté le nombre de personnes et de liens
+affichés.</p>
+<p><strong>Accès à toutes les personnes :</strong></p>
+<ul>
+<li><strong>Réseau complet</strong> : le curseur va maintenant jusqu’au
+total, et un bouton <strong>« Toutes »</strong> affiche les 9 799
+personnes. Ce bouton remet aussi le seuil de liens à 1 thèse en commun,
+ce qui donne 20 158 liens. Avec le seuil à 2, la plupart des personnes
+restaient isolées.</li>
+<li><strong>Docteur·es</strong> : celles et ceux qui n’ont ni dirigé ni
+siégé en jury étaient exclu·es du réseau, alors que la légende les
+annonçait. Ils et elles y figurent maintenant.</li>
+<li><strong>Recherche</strong> : elle propose toutes les personnes, et
+plus seulement celles présentes dans au moins deux thèses. Quand on
+choisit quelqu’un, sa fiche s’ouvre et la personne est ajoutée au réseau
+si elle n’y était pas. Le réseau zoome alors sur elle, et ses liens sont
+mis en évidence.</li>
+</ul>
+<p><strong>Changements dans le réseau :</strong></p>
+<ul>
+<li><strong>Dessin sur canvas</strong> : le réseau n’est plus dessiné en
+SVG mais sur un canvas, pour rester fluide avec près de 10 000 nœuds. On
+zoome avec la molette, on se déplace en glissant le fond, et on peut
+toujours déplacer un nœud.</li>
+<li><strong>Noms</strong> : seuls les 20 noms les plus actifs
+s’affichent au départ. Les autres apparaissent en zoomant
+fortement.</li>
+</ul>
+<p><strong>Une limite :</strong> la recherche propose 9 749 noms pour 9
+799 personnes, parce que des homonymes ont des identifiants différents.
+Pour un nom partagé, la recherche ouvre la personne la plus active. Les
+autres homonymes restent accessibles en cliquant sur leur nœud dans le
+réseau.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-11">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:44:22</sub></p>
+<p>crée une nouvelle page qui montre sous la forme d’une animation
+l’évolution historique des relations entre personnes et de l’importance
+des mots clefs</p>
+</div>
+<details>
+<summary>
+Actions (7)
+</summary>
+<ul>
+<li><p><strong>Write</strong> —
+/Users/samszo/Sites/thesesSIC/evolution.html</p></li>
+<li><p><strong>Bash</strong> — Add nav links and hash-based person
+opening</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">edits=[</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;index.html&#39;,&#39;&lt;a href=&quot;relations.html&quot;&gt;Relations →&lt;/a&gt;&#39;,&#39;&lt;a href=&quot;relations.html&quot;&gt;Relations →&lt;/a&gt; · &lt;a href=&quot;evolution.html&quot;&gt;Évolution →&lt;/a&gt;&#39;),</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;parallele.html&#39;,&#39;&lt;a href=&quot;relations.html&quot;&gt;Relations →&lt;/a&gt;&lt;/nav&gt;&#39;,&#39;&lt;a href=&quot;relations.html&quot;&gt;Relations →&lt;/a&gt; · &lt;a href=&quot;evolution.html&quot;&gt;Évolution →&lt;/a&gt;&lt;/nav&gt;&#39;),</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;relations.html&#39;,&#39;&lt;a href=&quot;parallele.html&quot;&gt;Coordonnées parallèles&lt;/a&gt;&lt;/nav&gt;&#39;,&#39;&lt;a href=&quot;parallele.html&quot;&gt;Coordonnées parallèles&lt;/a&gt;&lt;a href=&quot;evolution.html&quot;&gt;Évolution&lt;/a&gt;&lt;/nav&gt;&#39;),</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;relations.html&#39;,&#39;  update();\n}\nlet rT&#39;,&#39;  update();\n  const h = decodeURIComponent(lo</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>Bash</strong> — Disable sticky player on narrow
+screens</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;evolution.html&#39;; s=open(p).read()</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="st">a=&#39;@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }&#39;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="st">assert a in s</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">s=s.replace(a,&#39;@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } .player { position: static; } }&#39;)</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-16">🤖 Claude</h2>
+<p>Animation testée : le réseau, le classement des mots-clés et la frise
+se mettent à jour ensemble. Je termine.</p>
+<h2 id="claude-17">🤖 Claude</h2>
+<p>J’ai créé <a href="evolution.html">evolution.html</a>, qui anime
+année par année l’évolution des relations entre personnes et de
+l’importance des mots-clés. Je l’ai testée sur
+http://localhost/thesesSIC/evolution.html : de 2005 à 2022, les trois
+vues se mettent à jour ensemble, sans erreur.</p>
+<p><strong>Le lecteur</strong> reste en haut de l’écran sur les écrans
+larges :</p>
+<ul>
+<li><strong>Commandes</strong> : bouton lecture/pause, curseur pour
+aller directement à une année, et choix de la vitesse.</li>
+<li><strong>Clavier</strong> : la barre d’espace lance ou met en pause,
+et les flèches ← → avancent ou reculent d’une année.</li>
+<li><strong>Période</strong> :
+<ul>
+<li><strong>Fenêtre glissante</strong> : les thèses des N dernières
+années, 5 par défaut.</li>
+<li><strong>Cumulée</strong> : toutes les thèses depuis 1985.</li>
+</ul></li>
+<li><strong>Options</strong> : sujets RAMEAU ou mots-clés auteur, filtre
+par groupe (SIC, Voisines, STIC), et taille du réseau (80, 150 ou 300
+personnes).</li>
+<li><strong>Chiffres de la période</strong> : nombre de thèses, de
+personnes et de liens.</li>
+</ul>
+<p><strong>Les trois vues animées :</strong></p>
+<ol type="1">
+<li><strong>Réseau des personnes</strong> : il montre les personnes les
+plus actives de la période et leurs liens de direction, co-direction et
+jury. Les personnes apparaissent et disparaissent au fil des années.
+Celles déjà présentes gardent leur place d’une année à l’autre, et les
+nouvelles naissent près d’un voisin. Cliquer sur une personne ouvre sa
+fiche dans la page Relations, qui sait maintenant ouvrir une personne à
+partir du lien.</li>
+<li><strong>Course des 15 mots-clés les plus fréquents</strong> : les
+barres changent de rang en glissant, et les mots-clés qui viennent
+d’entrer dans le classement sont en orange.</li>
+<li><strong>Trajectoire des 8 mots-clés principaux</strong> : une frise
+en aires empilées sur toute la période sert de repère, avec une bande
+grise qui suit la période animée. Le survol donne les valeurs de
+l’année, et un clic y place l’animation.</li>
+</ol>
+<p><strong>Termes génériques :</strong> une case, cochée par défaut,
+écarte « France », les périodes (« 1990-2020 »…) et « Thèses et écrits
+académiques », qui dominaient le classement sans être informatifs.</p>
+<p><strong>Mouvement réduit :</strong> si cette option est activée dans
+le système, les changements s’affichent sans transition.</p>
+<p>Les quatre pages ont maintenant des liens entre elles. Rien n’est
+encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-12">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:52:28</sub></p>
+<p>dans evolution.html réseau des personnes :</p>
+<ul>
+<li>zoomer automatiquement pour voir tous le réseau</li>
+<li>permettre de manuellement zoomer et déplacer</li>
+</ul>
+</div>
+<details>
+<summary>
+Actions (4)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Add auto-fit zoom and manual pan/zoom to
+network</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;evolution.html&#39;; s=open(p).read()</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">reps=[</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st"># header button + hint</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;&lt;h2&gt;Réseau des personnes &lt;span class=&quot;hint&quot;&gt;les plus actives sur la période&lt;/span&gt;&lt;/h2&gt;&#39;,</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st"> &#39;&lt;h2 style=&quot;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap&quot;&gt;Réseau des personnes &lt;span class=&quot;hint&quot;&gt;les plus actives sur la période · molette pour zoomer, glisser pour déplacer&lt;/span&gt;&lt;button id=&quot;netfit&quot; type=&quot;button&quot; style=&quot;margin-left:auto;font-size:12px;padding:3px 10px&quot; hidden&gt;Recadrer automatiquement&lt;/button&gt;&lt;/h2&gt;&#39;),</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="st"># css: non-scaling strokes</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="st">(&#39;.net line { stroke: var(--edge); }&#39;,&#39;.net line { stroke: va</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:javascript_tool</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-18">🤖 Claude</h2>
+<p>J’ai ajouté le cadrage automatique et le zoom manuel au réseau des
+personnes dans <a href="evolution.html">evolution.html</a>. Je les ai
+testés dans le navigateur sans erreur, avec 300 personnes en 2015.</p>
+<p><strong>Zoom automatique :</strong></p>
+<ul>
+<li>La vue cadre tout le réseau en permanence et suit en douceur les
+déplacements pendant l’animation, quand des personnes apparaissent ou
+disparaissent.</li>
+<li>Les nœuds ne sont plus bloqués aux bords du cadre : avant, le réseau
+s’écrasait contre les bords au lieu de s’étaler.</li>
+<li>Les traits et les noms gardent la même épaisseur et la même taille
+quel que soit le niveau de zoom.</li>
+</ul>
+<p><strong>Zoom et déplacement manuels :</strong></p>
+<ul>
+<li>La molette zoome et glisser le fond déplace la vue. On peut toujours
+survoler ou cliquer une personne.</li>
+<li>Dès qu’on zoome ou qu’on déplace la vue soi-même, le cadrage
+automatique se met en pause pour ne pas annuler ce réglage. Un bouton
+<strong>« Recadrer automatiquement »</strong> apparaît alors pour le
+relancer.</li>
+</ul>
+<p>Rien n’est encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-13">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 06:56:10</sub></p>
+<p>dans evolution.html :</p>
+<ul>
+<li>ajouter l’évolution de l’importance des personnes sous la même forme
+que “Mots-clés les plus fréquents”</li>
+</ul>
+</div>
+<details>
+<summary>
+Actions (5)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Locate race code and layout in evolution
+page</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">&quot;RACE\|initRace\|updateRace\|bar chart race\|streamgraph (contexte)\|id=</span><span class="dt">\&quot;</span><span class="st">race</span><span class="dt">\&quot;</span><span class="st">\|grid2&quot;</span> evolution.html <span class="kw">|</span> <span class="fu">head</span> <span class="at">-60</span></span></code></pre></div></li>
+<li><p><strong>Bash</strong> — View layout markup and render
+function</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-n</span> 120,150p evolution.html <span class="kw">&amp;&amp;</span> <span class="fu">sed</span> <span class="at">-n</span> 455,475p evolution.html</span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Refactor races and add people race</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;evolution.html&#39;; s=open(p).read()</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st"># --- layout ---</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">old_kw=&#39;&#39;&#39;      &lt;div class=&quot;card&quot;&gt;</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;h2&gt;Mots-clés les plus fréquents &lt;span class=&quot;hint&quot;&gt;sur la période ; en orange, nouveaux venus dans le classement&lt;/span&gt;&lt;/h2&gt;</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">        &lt;div id=&quot;race&quot;&gt;&lt;/div&gt;</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;/div&gt;</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div class=&quot;card&quot; style=&quot;margin-top:16px&quot;&gt;</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;h2&gt;Trajectoire des 8 mots-clés principaux &lt;span class=&quot;hint&quot;&gt;thèses par année ; la bande grise suit la période animée&lt;/span&gt;&lt;/h2&gt;</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;div class=&quot;legend&quot; id=&quot;slegend&quot;&gt;&lt;/div&gt;</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;div id=&quot;stream&quot;&gt;&lt;/div&gt;</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;&#39;&#39;&#39;</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="st">new_kw=&#39;&#39;&#39;      &lt;div class=&quot;ca</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-19">🤖 Claude</h2>
+<p>Le classement des personnes fonctionne ; je vérifie son rendu
+visuel.</p>
+<details>
+<summary>
+Actions (1)
+</summary>
+<ul>
+<li><strong>navigateur:browser_batch</strong> —</li>
+</ul>
+</details>
+<h2 id="claude-20">🤖 Claude</h2>
+<p>J’ai ajouté dans <a href="evolution.html">evolution.html</a> un
+classement animé <strong>« Personnes les plus actives »</strong>, qui
+fonctionne comme celui des mots-clés. Je l’ai testé dans le navigateur,
+sans erreur : sur 2010–2014, Francis Balle arrive en tête avec 31
+thèses, devant Gino Gramaccia (30) et Jacques Barrat (28).</p>
+<p><strong>Ce que montre le classement :</strong></p>
+<ul>
+<li><strong>Les 15 personnes qui comptent le plus de thèses sur la
+période</strong>, avec des barres qui changent de rang en glissant,
+comme pour les mots-clés.</li>
+<li><strong>Un menu « Compter »</strong> pour choisir ce qu’on compte :
+toutes les participations (soutenance, direction, jury), seulement les
+directions, ou seulement les jurys.</li>
+<li><strong>La couleur des barres reprend celle du réseau</strong> :
+bleu pour qui dirige surtout, orange pour qui siège surtout en jury,
+vert pour les docteur·es.</li>
+<li><strong>Les nouveaux venus</strong> dans le classement sont signalés
+par un ▲ devant leur nombre. L’orange étant déjà utilisé pour le jury,
+je n’ai pas pu reprendre le code couleur des mots-clés.</li>
+<li><strong>Survol et clic</strong> : le survol détaille directions et
+jurys, et un clic ouvre la fiche de la personne dans la page
+Relations.</li>
+</ul>
+<p><strong>Nouvelle disposition, en deux rangées :</strong></p>
+<ul>
+<li><strong>Personnes</strong> : le réseau à côté du classement des
+personnes.</li>
+<li><strong>Mots-clés</strong> : le classement des mots-clés à côté de
+leur trajectoire.</li>
+</ul>
+<p>Sur un écran étroit, tout s’affiche sur une seule colonne.</p>
+<p>J’ai aussi regroupé le code des deux classements en un seul composant
+réutilisable. Rien n’est encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-14">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 07:04:57</sub></p>
+<p>dans evolution.html :</p>
+<ul>
+<li>supprimer “Réseau des personnes”</li>
+<li>pour “Trajectoire des 8 mots-clés principaux” mettre un curseur pour
+augmenter le nombre de mots-clefs</li>
+<li>ajouter une trajectoire de l’importance des personnes</li>
+</ul>
+</div>
+<details>
+<summary>
+Actions (6)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Locate sections and network
+references</p>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> <span class="st">&quot;// ----------\|NET\.\|initNetwork\|updateNetwork\|nmax\|s-p\|s-l\|STR\|drawStream\|moveStreamCursor&quot;</span> evolution.html <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">&quot;^\s*$&quot;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F:</span> <span class="st">&#39;$1&lt;200 || /----------|initNetwork|updateNetwork|nmax|s-p|s-l|drawStream\(|moveStreamCursor\(/&#39;</span> </span></code></pre></div></li>
+<li><p><strong>Bash</strong> — View markup and animation/start code</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-n</span> 100,175p evolution.html <span class="kw">&amp;&amp;</span> <span class="fu">sed</span> <span class="at">-n</span> 495,560p evolution.html <span class="kw">&amp;&amp;</span> <span class="fu">grep</span> <span class="at">-n</span> <span class="st">&quot;autoFit\|netfit&quot;</span> evolution.html</span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Remove network, add reusable trajectories
+with sliders</p>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/traj.js <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="st">// ---------- trajectoires (composant réutilisable) ----------</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">// ≤ 8 séries : aires empilées colorées ; au-delà : petits multiples (un mini-graphique par série, échelle commune)</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">function makeTraj(cfg) {</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="st">  const T = { n: cfg.defaultN };</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="st">  T.bind = () =&gt; {</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="st">    d3.select(cfg.slider).attr(&quot;min&quot;, 3).attr(&quot;max&quot;, cfg.maxN).attr(&quot;step&quot;, 1).property(&quot;value&quot;, T.n)</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="st">      .on(&quot;input&quot;, function () { T.n = +this.value; d3.select(cfg.sliderVal).text(T.n); d3.select(cfg.titl</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>Bash</strong> — Remove leftover network CSS</p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-</span> <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">p=&#39;evolution.html&#39;; s=open(p).read()</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">for x,y in [(&#39;.net line { stroke: var(--edge); vector-effect: non-scaling-stroke; }\n.net svg, svg.net { cursor: grab; touch-action: none; }\n.net circle { stroke: var(--surface-1); stroke-width: 1.5px; cursor: pointer; vector-effect: non-scaling-stroke; }\n&#39;,&#39;&#39;),</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">            (&#39;.net text, .race text.lab, .stream text.lab {&#39;,&#39;.race text.lab, .stream text.lab {&#39;),</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">            (&#39;.net text { fill: var(--text-primary); font-size: 11px; pointer-events: none; }\n&#39;,&#39;&#39;)]:</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">    assert x in s, x[:30]; s=s.replace(x,y)</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">open(p,&#39;w&#39;).write(s)</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-n</span> </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="ex">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-21">🤖 Claude</h2>
+<p>Les deux trajectoires sont en place ; je vérifie leur rendu.</p>
+<details>
+<summary>
+Actions (1)
+</summary>
+<ul>
+<li><strong>navigateur:browser_batch</strong> —</li>
+</ul>
+</details>
+<h2 id="claude-22">🤖 Claude</h2>
+<p>J’ai fait les trois modifications dans <a
+href="evolution.html">evolution.html</a> et je les ai testées dans le
+navigateur, sans erreur.</p>
+<p><strong>1. Réseau des personnes supprimé</strong>, avec tout son code
+: zoom, recadrage, menu « Réseau ». Dans le lecteur, le compteur « liens
+» disparaît, mais celui des personnes de la période reste.</p>
+<p><strong>2. Curseur sur la trajectoire des mots-clés</strong> : on
+choisit de 3 à 30 mots-clés, et le titre suit, par exemple « Trajectoire
+des 15 mots-clés principaux ».</p>
+<ul>
+<li><strong>Jusqu’à 8 mots-clés</strong>, l’affichage reste en aires
+empilées de couleurs différentes.</li>
+<li><strong>Au-delà de 8</strong>, chaque mot-clé a son propre
+mini-graphique, tous à la même échelle. Je n’ai que 8 couleurs bien
+distinctes, même pour les daltoniens, et des couleurs en plus rendraient
+le graphique illisible. Ce choix est expliqué sous le curseur.</li>
+</ul>
+<p><strong>3. Trajectoire de l’importance des personnes</strong>, sur le
+même modèle :</p>
+<ul>
+<li>Elle montre le nombre de thèses par an pour les principales
+personnes, avec un curseur de 3 à 30.</li>
+<li>Elle suit le menu « Compter » du classement : toutes les
+participations, les directions ou les jurys.</li>
+<li>Comme pour les mots-clés, une bande grise et un curseur suivent
+l’animation, le survol donne les valeurs, et un clic place l’animation
+sur l’année choisie.</li>
+</ul>
+<p><strong>Nouvelle disposition :</strong></p>
+<ul>
+<li><strong>Personnes</strong> : le classement des personnes à côté de
+leur trajectoire.</li>
+<li><strong>Mots-clés</strong> : le classement des mots-clés à côté de
+leur trajectoire.</li>
+</ul>
+<p>Rien n’est encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-15">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 07:08:27</sub></p>
+<p>re-ajoute “Réseau des personnes”</p>
+</div>
+<details>
+<summary>
+Actions (2)
+</summary>
+<ul>
+<li><p><strong>Bash</strong> — Restore network section, markup and
+controls</p>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> /private/tmp/claude-501/-Users-samszo--claude-spares-spare-rcMyg4/235e0112-f002-4814-9a94-8604b22fe222/scratchpad/net2.js <span class="op">&lt;&lt;&#39;EOF&#39;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="st">// ---------- réseau des personnes ----------</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="st">const NET = {};</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="st">function initNetwork() {</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="st">  const host = d3.select(&quot;#net&quot;); host.selectAll(&quot;*&quot;).remove();</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="st">  NET.W = host.node().clientWidth || 900; NET.H = Math.max(420, Math.min(620, NET.W * 0.55));</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="st">  NET.svg = host.append(&quot;svg&quot;).attr(&quot;viewBox&quot;, `0 0 ${NET.W} ${NET.H}`).attr(&quot;class&quot;, &quot;net&quot;)</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="st">    .attr(&quot;role&quot;, &quot;img&quot;).attr(&quot;aria-label&quot;, &quot;Réseau animé des personnes&quot;);</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="st">  NET.root = NET.svg.append(&quot;g&quot;);</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="st">  NET.gl = NET.ro</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="st">…</span></span></code></pre></div></li>
+<li><p><strong>navigateur:browser_batch</strong> —</p></li>
+</ul>
+</details>
+<h2 id="claude-23">🤖 Claude</h2>
+<p>J’ai remis le « Réseau des personnes » dans <a
+href="evolution.html">evolution.html</a>, avec les mêmes fonctions
+qu’avant. Je l’ai testé dans le navigateur, sans erreur : en 2014, il
+affiche 150 personnes, cadrées automatiquement.</p>
+<p><strong>Ce qui revient :</strong></p>
+<ul>
+<li><strong>Le réseau animé</strong> : les personnes apparaissent et
+disparaissent selon la période, et celles déjà présentes gardent leur
+place.</li>
+<li><strong>Le cadrage automatique</strong> de tout le réseau.</li>
+<li><strong>Le zoom à la molette et le déplacement</strong>, avec le
+bouton « Recadrer automatiquement » qui apparaît dès qu’on zoome ou
+qu’on déplace la vue.</li>
+<li><strong>Le menu « Réseau »</strong> (80, 150 ou 300 personnes) et le
+compteur de liens dans le lecteur.</li>
+<li><strong>Le clic sur une personne</strong>, qui ouvre sa fiche dans
+la page Relations.</li>
+</ul>
+<p><strong>Ce qui change :</strong></p>
+<ul>
+<li><strong>Emplacement</strong> : le réseau est maintenant un bloc
+pleine largeur, au-dessus du classement et de la trajectoire des
+personnes, qui gardent leur disposition côte à côte.</li>
+<li><strong>Légende</strong> : elle précise maintenant que le trait
+plein correspond à une direction vers un·e docteur·e, et le pointillé à
+une co-direction ou un jury.</li>
+</ul>
+<p>Rien n’est encore enregistré dans git.</p>
+<hr />
+<div class="user"><h2 id="utilisateur-16">🧑 Utilisateur</h2>
+<p><sub>2026-11-21 07:26:14</sub></p>
+<p>exporte l’ensemble de la conversation dans conversations.md</p>
+</div>
+<details>
+<summary>
+Actions (2)
+</summary>
+<ul>
+<li><p><strong>ToolSearch</strong> —
+select:mcp__ccd_session_mgmt__export_transcript</p></li>
+<li><p><strong>Bash</strong> — Find and inspect this session’s
+transcript file</p>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> ~/.claude/projects/-Users-samszo-Sites-thesesSIC/ <span class="kw">|</span> <span class="fu">head</span><span class="kw">;</span> <span class="va">f</span><span class="op">=</span>~/.claude/projects/-Users-samszo-Sites-thesesSIC/235e0112-f002-4814-9a94-8604b22fe222.jsonl<span class="kw">;</span> <span class="fu">ls</span> <span class="at">-la</span> <span class="va">$f</span> <span class="kw">&amp;&amp;</span> <span class="fu">head</span> <span class="at">-c</span> 1500 <span class="va">$f</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="kw">&amp;&amp;</span> <span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="st">import json,collections,sys</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st">c=collections.Counter()</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="st">for l in open(sys.argv[1]):</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="st">    d=json.loads(l); c[d.get(&#39;type&#39;)]+=1</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="st">print(c)&quot;</span> <span class="va">$f</span></span></code></pre></div></li>
+</ul>
+</details>
+</body>
+</html>
