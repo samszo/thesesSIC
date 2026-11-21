@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thèses SIC</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f3f0;
+  --surface-1: #fcfcfb;
+  --border: #e2e0da;
+  --grid: #ebe9e4;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7974;
+  --series-1: #2a78d6; /* SIC */
+  --series-2: #eb6834; /* Voisines */
+  --series-3: #1baf7a; /* STIC */
+  --bar: #2a78d6;
+  --bar-hover: #1c5cab;
+  --chip: #cde2fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111110;
+    --surface-1: #1a1a19;
+    --border: #2e2e2c;
+    --grid: #262624;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --bar: #3987e5;
+    --bar-hover: #6da7ec;
+    --chip: #184f95;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111110;
+  --surface-1: #1a1a19;
+  --border: #2e2e2c;
+  --grid: #262624;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --bar: #3987e5;
+  --bar-hover: #6da7ec;
+  --chip: #184f95;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text-primary);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
+.sub { color: var(--text-secondary); margin: 0 0 20px; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 16px; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--text-secondary); font-size: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin-bottom: 16px; }
+.filters label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-secondary); }
+.swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+input[type=search] {
+  font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface-1); color: var(--text-primary); min-width: 240px;
+}
+button {
+  font: inherit; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface-1); color: var(--text-primary); cursor: pointer;
+}
+button:hover { border-color: var(--text-muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--chip); border-radius: 999px; padding: 2px 10px; font-size: 12px; cursor: pointer; }
+.chip::after { content: " ×"; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; margin-top: 16px; }
+@media (max-width: 440px) { .grid { grid-template-columns: 1fr; } input[type=search] { min-width: 0; width: 100%; } }
+.legend { display: flex; gap: 16px; color: var(--text-secondary); font-size: 12px; margin-bottom: 6px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.hint { color: var(--text-muted); font-size: 12px; font-weight: 400; }
+svg { display: block; width: 100%; height: auto; }
+.axis text { fill: var(--text-muted); font-size: 11px; }
+.axis path, .axis line { stroke: var(--border); }
+.gridline line { stroke: var(--grid); }
+.gridline path { display: none; }
+.barlist .row { cursor: pointer; }
+.barlist .row text { fill: var(--text-primary); font-size: 12px; }
+.barlist .row text.val { fill: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.barlist .row path.bar { fill: var(--bar); }
+.barlist .row:hover path.bar, .barlist .row:focus path.bar { fill: var(--bar-hover); }
+.barlist .row.active path.bar { fill: var(--series-2); }
+.barlist .row:focus { outline: none; }
+.brush .selection { fill: var(--text-muted); fill-opacity: .12; stroke: var(--text-muted); }
+.net text { fill: var(--text-primary); font-size: 11px; pointer-events: none; paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round; }
+.net line { stroke: var(--text-muted); stroke-opacity: .35; }
+.net circle { fill: var(--bar); stroke: var(--surface-1); stroke-width: 2px; cursor: pointer; }
+.net circle:hover { fill: var(--bar-hover); }
+#tip {
+  position: fixed; pointer-events: none; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15); opacity: 0; transition: opacity .1s; max-width: 280px; z-index: 10;
+}
+#tip strong { font-size: 14px; display: block; }
+#tip .k { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; position: sticky; top: 0; background: var(--surface-1); }
+td.y { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tablewrap { max-height: 520px; overflow: auto; }
+a { color: var(--series-1); }
+#loader { padding: 40px; text-align: center; color: var(--text-secondary); }
+#app[hidden] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <nav style="margin-bottom:12px;font-size:13px"><a href="parallele.html">Coordonnées parallèles →</a> · <a href="relations.html">Relations →</a> · <a href="evolution.html">Évolution →</a></nav>
+  <h1>Thèses en SIC et disciplines voisines</h1>
+  <p class="sub">Analyse de <code><a href="thesesSIC.csv">thesesSIC.csv</a></code> (<a href="https://www.data.gouv.fr/datasets/theses-soutenues-en-france-depuis-1985" >export theses.fr / data.gouv</a>). Cliquez sur une barre ou un nœud pour filtrer ; glissez sur la frise pour choisir une période.</p>
+
+  <div id="loader">
+    Chargement de thesesSIC.csv…
+    <p id="loaderr" hidden>Impossible de lire le fichier directement (ouvrez la page via le serveur web), ou choisissez-le ici :
+      <input type="file" id="file" accept=".csv"></p>
+  </div>
+
+  <div id="app" hidden>
+    <div class="kpis">
+      <div class="card kpi"><div class="v" id="k-n">–</div><div class="l">thèses</div></div>
+      <div class="card kpi"><div class="v" id="k-etab">–</div><div class="l">établissements</div></div>
+      <div class="card kpi"><div class="v" id="k-dir">–</div><div class="l">directeurs·rices distinct·es</div></div>
+      <div class="card kpi"><div class="v" id="k-per">–</div><div class="l">période</div></div>
+      <div class="card kpi"><div class="v" id="k-acc">–</div><div class="l">accessibles en ligne</div></div>
+    </div>
+
+    <div class="filters">
+      <label><input type="checkbox" class="grp" value="SIC" checked><span class="swatch" style="background:var(--series-1)"></span>SIC</label>
+      <label><input type="checkbox" class="grp" value="Voisines" checked><span class="swatch" style="background:var(--series-2)"></span>Voisines</label>
+      <label><input type="checkbox" class="grp" value="STIC" checked><span class="swatch" style="background:var(--series-3)"></span>STIC</label>
+      <input type="search" id="q" placeholder="Rechercher titre, auteur, mot-clé…">
+      <button id="reset">Réinitialiser</button>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="card">
+      <h2>Soutenances par année <span class="hint" id="yearhint"></span></h2>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--series-1)"></span>SIC</span>
+        <span><span class="swatch" style="background:var(--series-2)"></span>Voisines</span>
+        <span><span class="swatch" style="background:var(--series-3)"></span>STIC</span>
+      </div>
+      <div id="timeline"></div>
+    </div>
+
+    <div class="grid">
+      <div class="card"><h2>Établissements de soutenance</h2><div id="c-etab" class="barlist"></div></div>
+      <div class="card"><h2>Directeurs·rices de thèse</h2><div id="c-dir" class="barlist"></div></div>
+      <div class="card"><h2>Sujets RAMEAU</h2><div id="c-ram" class="barlist"></div></div>
+      <div class="card"><h2>Mots-clés auteur (fr)</h2><div id="c-kw" class="barlist"></div></div>
+      <div class="card"><h2>Écoles doctorales</h2><div id="c-ed" class="barlist"></div></div>
+      <div class="card"><h2>Partenaires de recherche (laboratoires)</h2><div id="c-lab" class="barlist"></div></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Co-occurrence des sujets RAMEAU <span class="hint">40 sujets les plus fréquents, liens = thèses partagées (≥ 3)</span></h2>
+      <div id="net"></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Thèses <span class="hint" id="tabhint"></span></h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Année</th><th>Titre</th><th>Auteur</th><th>Direction</th><th>Établissement</th><th>Discipline</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+<div id="tip"></div>
+
+<script>
+const GROUPS = ["SIC", "Voisines", "STIC"];
+const GVAR = { SIC: "--series-1", Voisines: "--series-2", STIC: "--series-3" };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt = d3.format(",d");
+const fr = d3.formatLocale({ decimal: ",", thousands: " ", grouping: [3], currency: ["", " €"] });
+const nf = fr.format(",d");
+
+const norm = s => (s || "").replace(/’/g, "'").replace(/\s+/g, " ").trim().toLowerCase();
+function groupOf(disc) {
+  const n = norm(disc);
+  if (/\bstic\b|technolog|techniques? de l|^image, information/.test(n)) return "STIC";
+  if (/information,? (et )?(de la )?communication|information[- ]communication|information (et )?de la documentation/.test(n)) return "SIC";
+  return "Voisines";
+}
+const multi = (r, prefix, field) => {
+  const out = [];
+  for (let i = 0; i < 12; i++) {
+    const k = field ? `${prefix}.${i}.${field}` : `${prefix}.${i}`;
+    if (!(k in r)) break;
+    const v = (r[k] || "").trim();
+    if (v) out.push(v);
+  }
+  return out;
+};
+const person = (r, prefix, i) => {
+  const nom = (r[`${prefix}.${i}.nom`] || "").trim(), pre = (r[`${prefix}.${i}.prenom`] || "").trim();
+  return nom ? (pre ? `${pre} ${nom}` : nom) : null;
+};
+
+let DATA = [];
+const state = { groups: new Set(GROUPS), years: null, q: "", facets: {} };
+// facets: { key: value } for etab, dir, ram, kw, ed, lab
+
+function prep(rows) {
+  return rows.map(r => {
+    const dirs = [];
+    for (let i = 0; i < 7; i++) { const p = person(r, "directeurs_these", i); if (p) dirs.push(p); }
+    const d = {
+      nnt: r.nnt,
+      year: +((r.date_soutenance || "").slice(0, 4)) || null,
+      titre: r["titres.fr"] || r["titres.en"] || "",
+      auteur: [r["auteur.prenom"], r["auteur.nom"]].filter(Boolean).join(" "),
+      dirs,
+      etab: (r["etablissements_soutenance.0.nom"] || "").trim(),
+      disc: r.discipline,
+      group: groupOf(r.discipline),
+      acc: r.accessible === "oui",
+      ram: multi(r, "sujets_rameau"),
+      kw: [...new Set(multi(r, "sujets.fr").map(s => s.trim()))],
+      ed: multi(r, "ecoles_doctorales", "nom"),
+      lab: multi(r, "partenaires_recherche", "nom"),
+    };
+    d.text = norm([d.titre, d.auteur, d.dirs.join(" "), d.ram.join(" "), d.kw.join(" "), r["titres.en"]].join(" "));
+    return d;
+  }).filter(d => d.year);
+}
+
+const FACETS = {
+  etab: { el: "#c-etab", get: d => d.etab ? [d.etab] : [], label: "Établissement" },
+  dir:  { el: "#c-dir",  get: d => d.dirs, label: "Direction" },
+  ram:  { el: "#c-ram",  get: d => d.ram, label: "RAMEAU" },
+  kw:   { el: "#c-kw",   get: d => d.kw, label: "Mot-clé" },
+  ed:   { el: "#c-ed",   get: d => d.ed, label: "ED" },
+  lab:  { el: "#c-lab",  get: d => d.lab, label: "Partenaire" },
+};
+
+function filtered({ ignoreYears = false } = {}) {
+  const q = norm(state.q);
+  return DATA.filter(d => {
+    if (!state.groups.has(d.group)) return false;
+    if (!ignoreYears && state.years && (d.year < state.years[0] || d.year > state.years[1])) return false;
+    if (q && !d.text.includes(q)) return false;
+    for (const [k, v] of Object.entries(state.facets)) if (!FACETS[k].get(d).includes(v)) return false;
+    return true;
+  });
+}
+
+// ---------- tooltip ----------
+const tip = d3.select("#tip");
+function showTip(ev, value, label, color) {
+  tip.selectAll("*").remove();
+  tip.append("strong").text(value);
+  const line = tip.append("div");
+  if (color) line.append("span").attr("class", "k").style("background", color);
+  line.append("span").text(label);
+  moveTip(ev);
+  tip.style("opacity", 1);
+}
+function moveTip(ev) {
+  const r = tip.node().getBoundingClientRect();
+  let x = (ev.clientX ?? 0) + 14, y = (ev.clientY ?? 0) + 14;
+  if (x + r.width > innerWidth - 8) x = innerWidth - r.width - 8;
+  if (y + r.height > innerHeight - 8) y = (ev.clientY ?? 0) - r.height - 10;
+  tip.style("left", x + "px").style("top", y + "px");
+}
+const hideTip = () => tip.style("opacity", 0);
+
+// ---------- timeline ----------
+let tl = null;
+function drawTimeline() {
+  const rows = filtered({ ignoreYears: true });
+  const host = d3.select("#timeline");
+  const W = host.node().clientWidth || 900, H = 240, m = { t: 8, r: 8, b: 26, l: 40 };
+  const [y0, y1] = d3.extent(DATA, d => d.year);
+  const years = d3.range(y0, y1 + 1);
+  const roll = d3.rollup(rows, v => v.length, d => d.year, d => d.group);
+  const table = years.map(y => { const o = { year: y }; GROUPS.forEach(g => o[g] = roll.get(y)?.get(g) || 0); return o; });
+  const series = d3.stack().keys(GROUPS)(table);
+  const x = d3.scaleBand().domain(years).range([m.l, W - m.r]).paddingInner(0.15);
+  const y = d3.scaleLinear().domain([0, d3.max(table, d => GROUPS.reduce((s, g) => s + d[g], 0)) || 1]).nice().range([H - m.b, m.t]);
+
+  host.selectAll("*").remove();
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img")
+    .attr("aria-label", "Nombre de soutenances par année et par groupe de disciplines");
+  svg.append("g").attr("class", "gridline").attr("transform", `translate(${m.l},0)`)
+    .call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(""));
+  svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(nf));
+  const step = Math.ceil(years.length / Math.max(4, Math.floor(W / 60)));
+  svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`)
+    .call(d3.axisBottom(x).tickValues(years.filter(y => y % step === 0)).tickSizeOuter(0));
+
+  const inRange = yr => !state.years || (yr >= state.years[0] && yr <= state.years[1]);
+  svg.append("g").selectAll("g").data(series).join("g")
+    .attr("fill", s => css(GVAR[s.key]))
+    .selectAll("rect").data(s => s.map(p => (p.key = s.key, p))).join("rect")
+    .attr("x", p => x(p.data.year)).attr("width", x.bandwidth())
+    .attr("y", p => y(p[1])).attr("height", p => Math.max(0, y(p[0]) - y(p[1]) - (p[1] - p[0] > 0 ? 1 : 0)))
+    .attr("opacity", p => inRange(p.data.year) ? 1 : 0.3);
+
+  // per-year hit columns (tooltip lists every group)
+  const brushG = svg.append("g").attr("class", "brush");
+  const brush = d3.brushX().extent([[m.l, m.t], [W - m.r, H - m.b]]).on("end", ev => {
+    if (!ev.sourceEvent) return;
+    if (!ev.selection) { state.years = null; }
+    else {
+      const sel = years.filter(yr => { const c = x(yr) + x.bandwidth() / 2; return c >= ev.selection[0] && c <= ev.selection[1]; });
+      state.years = sel.length ? [sel[0], sel[sel.length - 1]] : null;
+    }
+    update();
+  });
+  brushG.call(brush);
+  if (state.years) brushG.call(brush.move, [x(state.years[0]), x(state.years[1]) + x.bandwidth()]);
+  brushG.select(".overlay")
+    .on("pointermove.tip", ev => {
+      const [px] = d3.pointer(ev);
+      const i = Math.max(0, Math.min(years.length - 1, Math.floor((px - m.l) / x.step())));
+      const row = table[i];
+      tip.selectAll("*").remove();
+      const tot = GROUPS.reduce((s, g) => s + row[g], 0);
+      tip.append("strong").text(`${row.year} · ${nf(tot)} thèses`);
+      GROUPS.forEach(g => { const l = tip.append("div"); l.append("span").attr("class", "k").style("background", css(GVAR[g])); l.append("span").text(`${g} : ${nf(row[g])}`); });
+      moveTip(ev); tip.style("opacity", 1);
+    })
+    .on("pointerleave.tip", hideTip);
+  d3.select("#yearhint").text(state.years ? `· sélection ${state.years[0]}–${state.years[1]}` : "· glissez pour sélectionner une période");
+}
+
+// ---------- bar lists ----------
+function drawBarList(key, rows, n = 15) {
+  const f = FACETS[key];
+  const counts = new Map();
+  rows.forEach(d => f.get(d).forEach(v => counts.set(v, (counts.get(v) || 0) + 1)));
+  const top = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, n);
+  const host = d3.select(f.el);
+  host.selectAll("*").remove();
+  if (!top.length) { host.append("p").attr("class", "hint").text("Aucune donnée pour cette sélection."); return; }
+  const W = host.node().clientWidth || 400, rowH = 22;
+  const labelW = Math.min(220, W * 0.48), valW = 44;
+  const x = d3.scaleLinear().domain([0, top[0][1]]).range([0, W - labelW - valW - 8]);
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${top.length * rowH}`).attr("role", "list");
+  const trunc = (s, px) => { const max = Math.floor(px / 6.4); return s.length > max ? s.slice(0, max - 1) + "…" : s; };
+  const g = svg.selectAll("g").data(top).join("g")
+    .attr("class", d => "row" + (state.facets[key] === d[0] ? " active" : ""))
+    .attr("transform", (d, i) => `translate(0,${i * rowH})`)
+    .attr("tabindex", 0).attr("role", "listitem")
+    .attr("aria-label", d => `${d[0]} : ${d[1]} thèses`)
+    .on("click", (ev, d) => toggleFacet(key, d[0]))
+    .on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggleFacet(key, d[0]); } })
+    .on("pointermove", (ev, d) => showTip(ev, `${nf(d[1])} thèses`, d[0]))
+    .on("pointerleave", hideTip);
+  g.append("rect").attr("width", W).attr("height", rowH).attr("fill", "transparent");
+  g.append("text").attr("x", 0).attr("y", rowH / 2).attr("dy", "0.35em").text(d => trunc(d[0], labelW - 8));
+  g.append("path").attr("class", "bar").attr("transform", `translate(${labelW},0)`)
+    .attr("d", d => { const w = Math.max(2, x(d[1])), h = rowH - 8, r = Math.min(4, w / 2); return `M0,4h${w - r}a${r},${r} 0 0 1 ${r},${r}v${h - 2 * r}a${r},${r} 0 0 1 ${-r},${r}h${-(w - r)}z`; })
+    ;
+  g.append("text").attr("class", "val").attr("x", d => labelW + Math.max(2, x(d[1])) + 6).attr("y", rowH / 2).attr("dy", "0.35em").text(d => nf(d[1]));
+}
+
+function toggleFacet(key, val) {
+  if (state.facets[key] === val) delete state.facets[key]; else state.facets[key] = val;
+  update();
+}
+
+// ---------- network ----------
+let sim = null;
+function drawNetwork(rows) {
+  const host = d3.select("#net");
+  host.selectAll("*").remove();
+  if (sim) sim.stop();
+  const counts = new Map();
+  rows.forEach(d => d.ram.forEach(t => counts.set(t, (counts.get(t) || 0) + 1)));
+  const top = [...counts].sort((a, b) => b[1] - a[1]).slice(0, 40);
+  if (top.length < 2) { host.append("p").attr("class", "hint").text("Pas assez de sujets pour cette sélection."); return; }
+  const idx = new Map(top.map(([t], i) => [t, i]));
+  const ew = new Map();
+  rows.forEach(d => {
+    const ts = [...new Set(d.ram)].filter(t => idx.has(t));
+    for (let i = 0; i < ts.length; i++) for (let j = i + 1; j < ts.length; j++) {
+      const k = [ts[i], ts[j]].sort().join("\u0001"); ew.set(k, (ew.get(k) || 0) + 1);
+    }
+  });
+  const nodes = top.map(([id, c]) => ({ id, c }));
+  const links = [...ew].filter(([, w]) => w >= 3).map(([k, w]) => { const [s, t] = k.split("\u0001"); return { source: s, target: t, w }; });
+  const W = host.node().clientWidth || 900, H = Math.min(560, Math.max(380, W * 0.55));
+  const r = d3.scaleSqrt().domain([0, d3.max(nodes, n => n.c)]).range([3, 22]);
+  const sw = d3.scaleLinear().domain([3, d3.max(links, l => l.w) || 3]).range([0.8, 5]);
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("class", "net")
+    .attr("role", "img").attr("aria-label", "Réseau de co-occurrence des sujets RAMEAU");
+  const link = svg.append("g").selectAll("line").data(links).join("line").attr("stroke-width", l => sw(l.w));
+  const node = svg.append("g").selectAll("circle").data(nodes).join("circle")
+    .attr("r", n => r(n.c))
+    .attr("fill", n => state.facets.ram === n.id ? css("--series-2") : css("--bar"))
+    .on("click", (ev, n) => toggleFacet("ram", n.id))
+    .on("pointermove", (ev, n) => showTip(ev, `${nf(n.c)} thèses`, n.id))
+    .on("pointerleave", hideTip)
+    .call(d3.drag()
+      .on("start", (ev, n) => { if (!ev.active) sim.alphaTarget(0.3).restart(); n.fx = n.x; n.fy = n.y; })
+      .on("drag", (ev, n) => { n.fx = ev.x; n.fy = ev.y; })
+      .on("end", (ev, n) => { if (!ev.active) sim.alphaTarget(0); n.fx = null; n.fy = null; }));
+  const label = svg.append("g").selectAll("text").data(nodes.filter((n, i) => i < 15)).join("text")
+    .attr("text-anchor", "middle").text(n => n.id.length > 28 ? n.id.slice(0, 27) + "…" : n.id);
+  sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(n => n.id).distance(110).strength(l => Math.min(0.6, l.w / 30)))
+    .force("charge", d3.forceManyBody().strength(-320))
+    .force("x", d3.forceX(W / 2).strength(0.06))
+    .force("y", d3.forceY(H / 2).strength(0.08))
+    .force("center", d3.forceCenter(W / 2, H / 2))
+    .force("collide", d3.forceCollide(n => r(n.c) + 4))
+    .on("tick", () => {
+      nodes.forEach(n => { n.x = Math.max(24, Math.min(W - 24, n.x)); n.y = Math.max(24, Math.min(H - 24, n.y)); });
+      link.attr("x1", l => l.source.x).attr("y1", l => l.source.y).attr("x2", l => l.target.x).attr("y2", l => l.target.y);
+      node.attr("cx", n => n.x).attr("cy", n => n.y);
+      label.attr("x", n => n.x).attr("y", n => n.y - r(n.c) - 5);
+    });
+}
+
+// ---------- table ----------
+function drawTable(rows) {
+  const sorted = rows.slice().sort((a, b) => b.year - a.year || a.titre.localeCompare(b.titre));
+  const shown = sorted.slice(0, 300);
+  d3.select("#tabhint").text(rows.length > shown.length ? `· ${nf(shown.length)} premières sur ${nf(rows.length)}` : `· ${nf(rows.length)}`);
+  const tr = d3.select("#tbody").selectAll("tr").data(shown, d => d.nnt).join("tr");
+  tr.selectAll("td").remove();
+  tr.append("td").attr("class", "y").text(d => d.year);
+  tr.append("td").append("a").attr("href", d => `https://theses.fr/${encodeURIComponent(d.nnt)}`).attr("target", "_blank").attr("rel", "noopener").text(d => d.titre || "(sans titre)");
+  tr.append("td").text(d => d.auteur);
+  tr.append("td").text(d => d.dirs.join(", "));
+  tr.append("td").text(d => d.etab);
+  tr.append("td").text(d => d.disc);
+}
+
+// ---------- KPIs & chips ----------
+function drawKpis(rows) {
+  d3.select("#k-n").text(nf(rows.length));
+  d3.select("#k-etab").text(nf(new Set(rows.map(d => d.etab).filter(Boolean)).size));
+  d3.select("#k-dir").text(nf(new Set(rows.flatMap(d => d.dirs)).size));
+  const ext = d3.extent(rows, d => d.year);
+  d3.select("#k-per").text(ext[0] ? `${ext[0]}–${ext[1]}` : "–");
+  d3.select("#k-acc").text(rows.length ? Math.round(100 * rows.filter(d => d.acc).length / rows.length) + " %" : "–");
+}
+function drawChips() {
+  const items = Object.entries(state.facets).map(([k, v]) => ({ k, v }));
+  d3.select("#chips").selectAll("span").data(items, d => d.k + d.v).join("span")
+    .attr("class", "chip").attr("title", "Retirer ce filtre")
+    .text(d => `${FACETS[d.k].label} : ${d.v}`)
+    .on("click", (ev, d) => { delete state.facets[d.k]; update(); });
+}
+
+function update() {
+  const rows = filtered();
+  drawKpis(rows);
+  drawChips();
+  drawTimeline();
+  Object.keys(FACETS).forEach(k => drawBarList(k, rows));
+  drawNetwork(rows);
+  drawTable(rows);
+}
+
+// ---------- controls ----------
+d3.selectAll(".grp").on("change", function () {
+  this.checked ? state.groups.add(this.value) : state.groups.delete(this.value);
+  update();
+});
+let qT;
+d3.select("#q").on("input", function () { clearTimeout(qT); qT = setTimeout(() => { state.q = this.value; update(); }, 200); });
+d3.select("#reset").on("click", () => {
+  state.groups = new Set(GROUPS); state.years = null; state.q = ""; state.facets = {};
+  d3.selectAll(".grp").property("checked", true); d3.select("#q").property("value", "");
+  update();
+});
+let rT;
+addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => DATA.length && update(), 200); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => DATA.length && update());
+
+// ---------- load ----------
+function start(rows) {
+  DATA = prep(rows);
+  d3.select("#loader").remove();
+  d3.select("#app").attr("hidden", null);
+  update();
+}
+d3.csv("thesesSIC.csv").then(start).catch(() => {
+  d3.select("#loaderr").attr("hidden", null);
+  d3.select("#file").on("change", function () {
+    const f = this.files[0]; if (!f) return;
+    f.text().then(t => start(d3.csvParse(t.replace(/^﻿/, ""))));
+  });
+});
+</script>
+</body>
+</html>

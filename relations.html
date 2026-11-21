@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relations académiques SIC</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f3f0;
+  --surface-1: #fcfcfb;
+  --border: #e2e0da;
+  --grid: #ebe9e4;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7974;
+  --series-1: #2a78d6; /* directeur·rice */
+  --series-2: #eb6834; /* jury */
+  --series-3: #1baf7a; /* auteur·rice */
+  --bar: #2a78d6;
+  --bar-hover: #1c5cab;
+  --edge: #7a7974;
+  --focus: #0b0b0b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111110; --surface-1: #1a1a19; --border: #2e2e2c; --grid: #262624;
+    --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+    --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+    --bar: #3987e5; --bar-hover: #6da7ec; --edge: #8f8e86; --focus: #f0efec;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111110; --surface-1: #1a1a19; --border: #2e2e2c; --grid: #262624;
+  --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+  --bar: #3987e5; --bar-hover: #6da7ec; --edge: #8f8e86; --focus: #f0efec;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text-primary); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+nav { margin-bottom: 12px; font-size: 13px; display: flex; gap: 16px; flex-wrap: wrap; }
+a { color: var(--series-1); }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
+h3 { font-size: 13px; margin: 14px 0 6px; color: var(--text-secondary); }
+.sub { color: var(--text-secondary); margin: 0 0 16px; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 16px; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--text-secondary); font-size: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin-bottom: 16px; }
+.filters label { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); cursor: pointer; }
+input[type=number], input[type=search], select, button {
+  font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface-1); color: var(--text-primary);
+}
+input[type=number] { width: 84px; }
+input[type=search] { min-width: 260px; }
+button { cursor: pointer; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; margin-top: 16px; }
+@media (max-width: 440px) { .grid2 { grid-template-columns: 1fr; } input[type=search] { min-width: 0; width: 100%; } }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.ln { width: 16px; height: 0; border-top: 2px solid var(--edge); display: inline-block; }
+.ln.dash { border-top-style: dashed; }
+.hint { color: var(--text-muted); font-size: 12px; font-weight: 400; }
+svg { display: block; width: 100%; height: auto; }
+.axis text { fill: var(--text-muted); font-size: 11px; }
+.axis path, .axis line { stroke: var(--border); }
+.barlist .row { cursor: pointer; }
+.barlist .row text { fill: var(--text-primary); font-size: 12px; }
+.barlist .row text.val { fill: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.barlist .row path.bar { fill: var(--bar); }
+.barlist .row:hover path.bar, .barlist .row:focus path.bar { fill: var(--bar-hover); }
+.barlist .row:focus { outline: none; }
+.tree path { fill: none; stroke: var(--edge); stroke-opacity: .6; }
+.tree circle { stroke: var(--surface-1); stroke-width: 1.5px; cursor: pointer; }
+.tree text { fill: var(--text-primary); font-size: 11px; paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; cursor: pointer; }
+.tree text.yr { fill: var(--text-muted); font-size: 10px; }
+#tip {
+  position: fixed; pointer-events: none; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15); opacity: 0; transition: opacity .1s; max-width: 300px; z-index: 10;
+}
+#tip strong { font-size: 14px; display: block; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; position: sticky; top: 0; background: var(--surface-1); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+td .pl { cursor: pointer; color: var(--series-1); text-decoration: underline; text-decoration-color: transparent; }
+td .pl:hover { text-decoration-color: currentColor; }
+.tablewrap { max-height: 440px; overflow: auto; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 4px; }
+.badge { border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; font-size: 12px; color: var(--text-secondary); }
+.badge b { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.scrollx { overflow-x: auto; }
+#loader { padding: 40px; text-align: center; color: var(--text-secondary); }
+#app[hidden], #person[hidden] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <nav><a href="index.html">← Tableau de bord</a><a href="parallele.html">Coordonnées parallèles</a><a href="evolution.html">Évolution</a></nav>
+  <h1>Relations entre auteur·rices, directeur·rices et jurys</h1>
+  <p class="sub">Les personnes sont identifiées par leur identifiant IdRef, ou par leur nom quand il manque. « Jury » regroupe les membres du jury, la présidence et les rapporteur·rices, hors directeur·rices de la thèse.</p>
+
+  <div id="loader">Chargement de thesesSIC.csv…
+    <p id="loaderr" hidden>Impossible de lire le fichier (ouvrez la page via le serveur web), ou choisissez-le ici :
+      <input type="file" id="file" accept=".csv"></p>
+  </div>
+
+  <div id="app" hidden>
+    <div class="filters">
+      <label><input type="checkbox" class="grp" value="SIC" checked>SIC</label>
+      <label><input type="checkbox" class="grp" value="Voisines" checked>Voisines</label>
+      <label><input type="checkbox" class="grp" value="STIC" checked>STIC</label>
+      <label>De <input type="number" id="y0"></label>
+      <label>à <input type="number" id="y1"></label>
+      <input type="search" id="who" list="people" placeholder="Chercher une personne…">
+      <datalist id="people"></datalist>
+    </div>
+
+    <div class="kpis">
+      <div class="card kpi"><div class="v" id="k-th">–</div><div class="l">thèses</div></div>
+      <div class="card kpi"><div class="v" id="k-p">–</div><div class="l">personnes distinctes</div></div>
+      <div class="card kpi"><div class="v" id="k-d">–</div><div class="l">directeur·rices</div></div>
+      <div class="card kpi"><div class="v" id="k-j">–</div><div class="l">membres de jury</div></div>
+      <div class="card kpi"><div class="v" id="k-ad">–</div><div class="l">docteur·es devenu·es directeur·rices</div></div>
+      <div class="card kpi"><div class="v" id="k-aj">–</div><div class="l">docteur·es devenu·es membres de jury</div></div>
+    </div>
+
+    <div class="card" id="person" hidden>
+      <h2 id="p-name"></h2>
+      <div class="badges" id="p-badges"></div>
+      <div class="grid2" style="margin-top:4px">
+        <div>
+          <h3>Descendance scientifique <span class="hint">docteur·es dirigé·es, puis leurs propres docteur·es</span></h3>
+          <div class="scrollx"><div id="p-tree"></div></div>
+          <h3>Ascendance</h3>
+          <div id="p-asc" class="hint"></div>
+        </div>
+        <div>
+          <h3>Collaborateur·rices les plus fréquent·es <span class="hint">thèses partagées, tous rôles</span></h3>
+          <div id="p-coll" class="barlist"></div>
+        </div>
+      </div>
+      <h3>Thèses</h3>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Rôle</th><th>Année</th><th>Titre</th><th>Auteur·rice</th><th>Direction</th></tr></thead>
+        <tbody id="p-theses"></tbody>
+      </table></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Réseau des personnes <span class="hint" id="net-info"></span></h2>
+      <p class="hint" style="margin:-6px 0 10px">Cliquez sur un nœud pour afficher la fiche ; molette pour zoomer, glisser pour déplacer. Les noms apparaissent en zoomant.</p>
+      <div class="filters" style="margin-bottom:8px">
+        <label>Personnes <input type="range" id="nmax" min="30" max="300" step="10" value="120"><span id="nmax-v">120</span></label>
+        <button id="nall" type="button">Toutes</button>
+        <label>Lien si ≥ <input type="number" id="wmin" min="1" value="2" style="width:64px"> thèses en commun</label>
+        <label><input type="checkbox" class="lt" value="direction" checked>direction → docteur·e</label>
+        <label><input type="checkbox" class="lt" value="codirection" checked>co-direction</label>
+        <label><input type="checkbox" class="lt" value="jury" checked>direction ↔ jury</label>
+      </div>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--series-1)"></span>dirige surtout</span>
+        <span><span class="sw" style="background:var(--series-2)"></span>siège surtout en jury</span>
+        <span><span class="sw" style="background:var(--series-3)"></span>docteur·e uniquement</span>
+        <span class="hint">taille = nombre de thèses ; épaisseur = thèses en commun</span>
+      </div>
+      <div id="net"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><h2>Profils de rôles <span class="hint">combinaisons de rôles par personne</span></h2><div id="c-roles" class="barlist"></div></div>
+      <div class="card"><h2>Directeur·rices <span class="hint">thèses dirigées</span></h2><div id="c-dir" class="barlist"></div></div>
+      <div class="card"><h2>Membres de jury <span class="hint">jurys hors direction</span></h2><div id="c-jury" class="barlist"></div></div>
+      <div class="card"><h2>Lignées <span class="hint">nombre de descendant·es scientifiques (toutes générations)</span></h2><div id="c-lin" class="barlist"></div></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Qui invite qui ? <span class="hint">couples directeur·rice → membre du jury les plus fréquents</span></h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Directeur·rice</th><th>Membre du jury invité·e</th><th style="text-align:right">Thèses</th><th>Années</th></tr></thead>
+        <tbody id="pairs"></tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+<div id="tip"></div>
+
+<script>
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const nf = d3.formatLocale({ decimal: ",", thousands: " ", grouping: [3], currency: ["", ""] }).format(",d");
+const norm = s => (s || "").replace(/’/g, "'").replace(/\s+/g, " ").trim().toLowerCase();
+const strip = s => norm(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+function groupOf(disc) {
+  const n = norm(disc);
+  if (/\bstic\b|technolog|techniques? de l|^image, information/.test(n)) return "STIC";
+  if (/information,? (et )?(de la )?communication|information[- ]communication|information (et )?de la documentation/.test(n)) return "SIC";
+  return "Voisines";
+}
+
+// ---------- people registry ----------
+const PEOPLE = new Map(); // id -> {id, name, idref}
+let THESES = [];
+
+function rawPeople(r, prefix, max) {
+  const out = [];
+  for (let i = 0; i < max; i++) {
+    const nom = (r[`${prefix}.${i}.nom`] || "").trim();
+    if (!(`${prefix}.${i}.nom` in r)) break;
+    if (nom) out.push({ idref: (r[`${prefix}.${i}.idref`] || "").trim(), nom, prenom: (r[`${prefix}.${i}.prenom`] || "").trim() });
+  }
+  return out;
+}
+function prep(rows) {
+  // 1re passe : nom normalisé -> idref (si unique)
+  const raw = rows.map(r => {
+    const pres = (r["president_jury.nom"] || "").trim()
+      ? [{ idref: (r["president_jury.idref"] || "").trim(), nom: r["president_jury.nom"].trim(), prenom: (r["president_jury.prenom"] || "").trim() }] : [];
+    return {
+      r,
+      auteur: (r["auteur.nom"] || "").trim() ? [{ idref: (r["auteur.idref"] || "").trim(), nom: r["auteur.nom"].trim(), prenom: (r["auteur.prenom"] || "").trim() }] : [],
+      dirs: rawPeople(r, "directeurs_these", 10),
+      jury: [...rawPeople(r, "membres_jury", 40), ...pres, ...rawPeople(r, "rapporteurs", 20)],
+    };
+  });
+  const nameIds = new Map();
+  raw.forEach(t => [...t.auteur, ...t.dirs, ...t.jury].forEach(p => {
+    if (!p.idref) return;
+    const k = strip(p.prenom + " " + p.nom);
+    if (!nameIds.has(k)) nameIds.set(k, new Set());
+    nameIds.get(k).add(p.idref);
+  }));
+  const resolve = p => {
+    const k = strip(p.prenom + " " + p.nom);
+    let id = p.idref;
+    if (!id) { const s = nameIds.get(k); id = s && s.size === 1 ? [...s][0] : "n:" + k; }
+    if (!PEOPLE.has(id)) PEOPLE.set(id, { id, idref: id.startsWith("n:") ? null : id, name: p.prenom ? `${p.prenom} ${p.nom}` : p.nom });
+    return id;
+  };
+  THESES = raw.map(({ r, auteur, dirs, jury }) => {
+    const dirIds = [...new Set(dirs.map(resolve))];
+    const jurIds = [...new Set(jury.map(resolve))].filter(id => !dirIds.includes(id));
+    const autId = auteur.length ? resolve(auteur[0]) : null;
+    return {
+      nnt: r.nnt, annee: +((r.date_soutenance || "").slice(0, 4)) || null,
+      titre: r["titres.fr"] || r["titres.en"] || "", groupe: groupOf(r.discipline),
+      etab: (r["etablissements_soutenance.0.nom"] || "").trim(),
+      aut: autId, dirs: dirIds, jury: jurIds.filter(id => id !== autId),
+    };
+  }).filter(t => t.annee);
+}
+const pname = id => PEOPLE.get(id)?.name || id;
+
+// ---------- filtering & aggregates ----------
+const state = { groups: new Set(["SIC", "Voisines", "STIC"]), y0: null, y1: null, person: null,
+  nmax: 120, wmin: 2, ltypes: new Set(["direction", "codirection", "jury"]) };
+let AGG = null;
+
+function aggregate() {
+  const th = THESES.filter(t => state.groups.has(t.groupe) && t.annee >= state.y0 && t.annee <= state.y1);
+  const P = new Map(); // id -> {aut:[], dir:[], jury:[]}
+  const get = id => { if (!P.has(id)) P.set(id, { id, aut: [], dir: [], jury: [] }); return P.get(id); };
+  const edges = new Map(); // "a|b" -> {a,b,w, types:{direction,codirection,jury}}
+  const pairs = new Map(); // dir->jury directed
+  const addE = (a, b, type) => {
+    const [x, y] = a < b ? [a, b] : [b, a], k = x + "|" + y;
+    if (!edges.has(k)) edges.set(k, { a: x, b: y, w: 0, types: { direction: 0, codirection: 0, jury: 0 } });
+    const e = edges.get(k); e.w++; e.types[type]++;
+  };
+  th.forEach(t => {
+    if (t.aut) get(t.aut).aut.push(t);
+    t.dirs.forEach(d => get(d).dir.push(t));
+    t.jury.forEach(j => get(j).jury.push(t));
+    t.dirs.forEach(d => { if (t.aut) addE(d, t.aut, "direction"); });
+    for (let i = 0; i < t.dirs.length; i++) for (let k = i + 1; k < t.dirs.length; k++) addE(t.dirs[i], t.dirs[k], "codirection");
+    t.dirs.forEach(d => t.jury.forEach(j => {
+      addE(d, j, "jury");
+      const k = d + "→" + j;
+      if (!pairs.has(k)) pairs.set(k, { d, j, n: 0, years: [] });
+      const p = pairs.get(k); p.n++; p.years.push(t.annee);
+    }));
+  });
+  // filiation sur toutes les thèses filtrées : directeur -> docteur·es
+  const children = new Map(), parents = new Map();
+  th.forEach(t => { if (!t.aut) return; t.dirs.forEach(d => {
+    if (!children.has(d)) children.set(d, []);
+    children.get(d).push({ id: t.aut, t });
+    if (!parents.has(t.aut)) parents.set(t.aut, []);
+    parents.get(t.aut).push({ id: d, t });
+  }); });
+  AGG = { th, P, edges, pairs, children, parents };
+}
+
+function roleOf(p) {
+  if (p.dir.length && p.dir.length >= p.jury.length) return "dir";
+  if (p.jury.length) return "jury";
+  return "aut";
+}
+const ROLE_VAR = { dir: "--series-1", jury: "--series-2", aut: "--series-3" };
+
+// ---------- tooltip ----------
+const tip = d3.select("#tip");
+function showTip(ev, strong, lines) {
+  tip.selectAll("*").remove();
+  tip.append("strong").text(strong);
+  (lines || []).forEach(l => tip.append("div").text(l));
+  const r = tip.node().getBoundingClientRect();
+  let x = ev.clientX + 14, y = ev.clientY + 14;
+  if (x + r.width > innerWidth - 8) x = innerWidth - r.width - 8;
+  if (y + r.height > innerHeight - 8) y = ev.clientY - r.height - 10;
+  tip.style("left", x + "px").style("top", y + "px").style("opacity", 1);
+}
+const hideTip = () => tip.style("opacity", 0);
+
+// ---------- bar list ----------
+function barList(sel, items, { onClick, n = 15 } = {}) {
+  const host = d3.select(sel); host.selectAll("*").remove();
+  const top = items.slice(0, n);
+  if (!top.length) { host.append("p").attr("class", "hint").text("Aucune donnée."); return; }
+  const W = host.node().clientWidth || 400, rowH = 22, labelW = Math.min(220, W * 0.48), valW = 44;
+  const x = d3.scaleLinear([0, d3.max(top, d => d.v)], [0, W - labelW - valW - 8]);
+  const maxCh = Math.floor((labelW - 8) / 6.4);
+  const g = d3.select(sel).append("svg").attr("viewBox", `0 0 ${W} ${top.length * rowH}`).attr("role", "list")
+    .selectAll("g").data(top).join("g").attr("class", "row")
+    .attr("transform", (d, i) => `translate(0,${i * rowH})`).attr("tabindex", onClick ? 0 : null)
+    .attr("role", "listitem").attr("aria-label", d => `${d.label} : ${d.v}`)
+    .on("pointermove", (ev, d) => showTip(ev, nf(d.v), [d.label, ...(d.extra || [])]))
+    .on("pointerleave", hideTip);
+  if (onClick) g.on("click", (ev, d) => onClick(d))
+    .on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onClick(d); } });
+  else g.style("cursor", "default");
+  g.append("rect").attr("width", W).attr("height", rowH).attr("fill", "transparent");
+  g.append("text").attr("y", rowH / 2).attr("dy", "0.35em").text(d => d.label.length > maxCh ? d.label.slice(0, maxCh - 1) + "…" : d.label);
+  g.append("path").attr("class", "bar").attr("transform", `translate(${labelW},0)`)
+    .attr("d", d => { const w = Math.max(2, x(d.v)), h = rowH - 8, r = Math.min(4, w / 2); return `M0,4h${w - r}a${r},${r} 0 0 1 ${r},${r}v${h - 2 * r}a${r},${r} 0 0 1 ${-r},${r}h${-(w - r)}z`; });
+  g.append("text").attr("class", "val").attr("x", d => labelW + Math.max(2, x(d.v)) + 6).attr("y", rowH / 2).attr("dy", "0.35em").text(d => nf(d.v));
+}
+
+// ---------- lineage ----------
+function descendants(id, depth = 0, seen = new Set()) {
+  seen.add(id);
+  const kids = depth < 5 ? (AGG.children.get(id) || []).filter(c => !seen.has(c.id)) : [];
+  const uniq = d3.groups(kids, c => c.id).map(([cid, arr]) => ({ cid, t: arr[0].t }));
+  return { id, children: uniq.sort((a, b) => a.t.annee - b.t.annee).map(c => ({ ...descendants(c.cid, depth + 1, seen), t: c.t })) };
+}
+const countDesc = node => (node.children || []).reduce((s, c) => s + 1 + countDesc(c), 0);
+
+// ---------- KPIs & charts ----------
+function drawSummary() {
+  const { th, P } = AGG;
+  const people = [...P.values()];
+  const authors = new Set(people.filter(p => p.aut.length).map(p => p.id));
+  d3.select("#k-th").text(nf(th.length));
+  d3.select("#k-p").text(nf(people.length));
+  d3.select("#k-d").text(nf(people.filter(p => p.dir.length).length));
+  d3.select("#k-j").text(nf(people.filter(p => p.jury.length).length));
+  d3.select("#k-ad").text(nf(people.filter(p => authors.has(p.id) && p.dir.length).length));
+  d3.select("#k-aj").text(nf(people.filter(p => authors.has(p.id) && p.jury.length).length));
+
+  const combo = p => [p.aut.length && "docteur·e", p.dir.length && "directeur·rice", p.jury.length && "jury"].filter(Boolean).join(" + ");
+  barList("#c-roles", d3.rollups(people, v => v.length, combo).map(([label, v]) => ({ label, v })).sort((a, b) => b.v - a.v), { n: 8 });
+  const open = d => showPerson(d.id);
+  barList("#c-dir", people.filter(p => p.dir.length).map(p => ({ id: p.id, label: pname(p.id), v: p.dir.length, extra: [`${p.jury.length} jurys`] })).sort((a, b) => b.v - a.v), { onClick: open });
+  barList("#c-jury", people.filter(p => p.jury.length).map(p => ({ id: p.id, label: pname(p.id), v: p.jury.length, extra: [`${p.dir.length} thèses dirigées`] })).sort((a, b) => b.v - a.v), { onClick: open });
+  const lin = people.filter(p => p.dir.length).map(p => {
+    const tree = descendants(p.id); const all = countDesc(tree);
+    return { id: p.id, label: pname(p.id), v: all, extra: [`${p.dir.length} docteur·es direct·es`] };
+  }).filter(d => d.v > 0).sort((a, b) => b.v - a.v);
+  // ne garder que ceux dont la lignée dépasse la première génération en tête
+  lin.sort((a, b) => b.v - a.v);
+  barList("#c-lin", lin, { onClick: open });
+
+  const pairs = [...AGG.pairs.values()].sort((a, b) => b.n - a.n).slice(0, 40);
+  const tr = d3.select("#pairs").selectAll("tr").data(pairs).join("tr");
+  tr.selectAll("td").remove();
+  tr.append("td").append("span").attr("class", "pl").text(p => pname(p.d)).on("click", (ev, p) => showPerson(p.d));
+  tr.append("td").append("span").attr("class", "pl").text(p => pname(p.j)).on("click", (ev, p) => showPerson(p.j));
+  tr.append("td").attr("class", "n").text(p => p.n);
+  tr.append("td").text(p => { const [a, b] = d3.extent(p.years); return a === b ? a : `${a}–${b}`; });
+}
+
+// ---------- network (canvas, pour supporter toutes les personnes) ----------
+let sim, netRender = () => {}, netFocus = () => {}, netHas = () => false;
+const act = p => p.aut.length + p.dir.length + p.jury.length;
+function drawNetwork() {
+  const host = d3.select("#net"); host.selectAll("*").remove();
+  if (sim) sim.stop();
+  const { P, edges } = AGG;
+  const all = [...P.values()].sort((a, b) => act(b) - act(a));
+  const total = all.length;
+  const nmax = Math.min(state.nmax, total);
+  d3.select("#nmax").attr("max", total).property("value", nmax);
+  d3.select("#nmax-v").text(`${nf(nmax)} / ${nf(total)}`);
+  const keep = new Set(all.slice(0, nmax).map(p => p.id));
+  if (state.person && P.has(state.person)) keep.add(state.person);
+  const links = [];
+  for (const e of edges.values()) {
+    if (!keep.has(e.a) || !keep.has(e.b)) continue;
+    const w = [...state.ltypes].reduce((s, t) => s + e.types[t], 0);
+    if (w >= state.wmin) links.push({ source: e.a, target: e.b, w, dir: e.types.direction > 0 && state.ltypes.has("direction") });
+  }
+  const nodes = [...keep].map(id => ({ id, p: P.get(id) }));
+  const byId = new Map(nodes.map(n => [n.id, n]));
+  netHas = id => byId.has(id);
+  d3.select("#net-info").text(`${nf(nodes.length)} personnes, ${nf(links.length)} liens`);
+
+  const W = host.node().clientWidth || 900, H = Math.min(760, Math.max(460, W * 0.65));
+  const dpr = window.devicePixelRatio || 1;
+  const canvas = host.append("canvas").attr("width", W * dpr).attr("height", H * dpr)
+    .style("width", "100%").style("height", "auto").style("display", "block").style("touch-action", "none")
+    .attr("role", "img").attr("aria-label", "Réseau des personnes : directeur·rices, membres de jury et docteur·es").node();
+  const ctx = canvas.getContext("2d");
+  const big = nodes.length > 1500;
+  const r = d3.scaleSqrt([1, d3.max(nodes, n => act(n.p)) || 1], big ? [1.6, 14] : [3, 18]);
+  const sw = d3.scaleLinear([1, d3.max(links, l => l.w) || 1], [0.6, 5]);
+  const colors = { dir: css("--series-1"), jury: css("--series-2"), aut: css("--series-3") };
+  const edgeC = css("--edge"), surf = css("--surface-1"), focusC = css("--focus"), textC = css("--text-primary");
+  const labelled = new Set(nodes.slice(0, 20).map(n => n.id));
+  let T = d3.zoomIdentity;
+  // position initiale : les plus actifs au centre
+  nodes.forEach((n, i) => { const a = i * 2.39996, d = 6 * Math.sqrt(i); n.x = W / 2 + d * Math.cos(a); n.y = H / 2 + d * Math.sin(a); });
+
+  netRender = () => {
+    const sel = state.person;
+    ctx.save();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.translate(T.x, T.y); ctx.scale(T.k, T.k);
+    ctx.strokeStyle = edgeC;
+    ctx.globalAlpha = big ? 0.18 : 0.35;
+    for (const dashed of [false, true]) {
+      ctx.setLineDash(dashed ? [3 / T.k, 2 / T.k] : []);
+      for (const l of links) {
+        if (l.dir === dashed) continue;
+        ctx.lineWidth = sw(l.w) / Math.sqrt(T.k);
+        ctx.beginPath(); ctx.moveTo(l.source.x, l.source.y); ctx.lineTo(l.target.x, l.target.y); ctx.stroke();
+      }
+    }
+    ctx.setLineDash([]);
+    if (sel && byId.has(sel)) { // liens de la personne sélectionnée en évidence
+      ctx.globalAlpha = 0.9; ctx.strokeStyle = focusC;
+      for (const l of links) if (l.source.id === sel || l.target.id === sel) {
+        ctx.lineWidth = Math.max(1, sw(l.w)) / Math.sqrt(T.k);
+        ctx.beginPath(); ctx.moveTo(l.source.x, l.source.y); ctx.lineTo(l.target.x, l.target.y); ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 1 / T.k; ctx.strokeStyle = surf;
+    for (const n of nodes) {
+      ctx.beginPath(); ctx.arc(n.x, n.y, r(act(n.p)), 0, 2 * Math.PI);
+      ctx.fillStyle = colors[roleOf(n.p)]; ctx.fill(); if (!big || T.k > 2) ctx.stroke();
+    }
+    if (sel && byId.has(sel)) {
+      const n = byId.get(sel);
+      ctx.beginPath(); ctx.arc(n.x, n.y, r(act(n.p)) + 3 / T.k, 0, 2 * Math.PI);
+      ctx.lineWidth = 3 / T.k; ctx.strokeStyle = focusC; ctx.stroke();
+    }
+    // étiquettes : 20 plus actifs + sélection + tous à fort zoom
+    ctx.font = `${11 / T.k}px system-ui, sans-serif`; ctx.textAlign = "center";
+    ctx.lineJoin = "round"; ctx.lineWidth = 3 / T.k; ctx.strokeStyle = surf; ctx.fillStyle = textC;
+    const showAll = T.k >= 3;
+    for (const n of nodes) {
+      if (!(labelled.has(n.id) || n.id === sel || (showAll && act(n.p) > 1))) continue;
+      const sx = T.applyX(n.x), sy = T.applyY(n.y);
+      if (showAll && (sx < 0 || sx > W || sy < 0 || sy > H)) continue;
+      const y = n.y - r(act(n.p)) - 4 / T.k;
+      ctx.strokeText(pname(n.id), n.x, y); ctx.fillText(pname(n.id), n.x, y);
+    }
+    ctx.restore();
+  };
+
+  const toSim = ev => { const [px, py] = d3.pointer(ev, canvas); const [x, y] = T.invert([px, py]); return [x, y]; };
+  const find = ev => { const [x, y] = toSim(ev); return sim.find(x, y, 14 / T.k) || null; };
+  const zoom = d3.zoom().scaleExtent([0.1, 20]).on("zoom", ev => { T = ev.transform; netRender(); });
+  netFocus = id => {
+    const n = byId.get(id); if (!n || n.x == null) return;
+    const k = Math.max(T.k, 2.5);
+    d3.select(canvas).transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * n.x, H / 2 - k * n.y).scale(k));
+  };
+  d3.select(canvas)
+    .call(d3.drag().subject(ev => { const n = find(ev.sourceEvent || ev); return n ? { ...n, x: T.applyX(n.x), y: T.applyY(n.y), n } : null; })
+      .on("start", ev => { if (!ev.active) sim.alphaTarget(0.2).restart(); ev.subject.n.fx = ev.subject.n.x; ev.subject.n.fy = ev.subject.n.y; })
+      .on("drag", ev => { const [x, y] = T.invert([ev.x, ev.y]); ev.subject.n.fx = x; ev.subject.n.fy = y; })
+      .on("end", ev => { if (!ev.active) sim.alphaTarget(0); ev.subject.n.fx = null; ev.subject.n.fy = null; }))
+    .call(zoom)
+    .on("dblclick.zoom", null)
+    .on("pointermove", ev => {
+      const n = find(ev);
+      canvas.style.cursor = n ? "pointer" : "grab";
+      if (n) showTip(ev, pname(n.id), [`${n.p.dir.length} thèses dirigées`, `${n.p.jury.length} jurys`, n.p.aut.length ? `docteur·e (${n.p.aut[0].annee})` : ""].filter(Boolean));
+      else hideTip();
+    })
+    .on("pointerleave", hideTip)
+    .on("click", ev => { const n = find(ev); if (n) showPerson(n.id); });
+
+  sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(n => n.id).distance(big ? 30 : 60).strength(l => Math.min(0.7, 0.1 + l.w / 10)))
+    .force("charge", d3.forceManyBody().strength(big ? -14 : -90).theta(big ? 1.2 : 0.9).distanceMax(big ? 300 : Infinity))
+    .force("x", d3.forceX(W / 2).strength(big ? 0.03 : 0.05)).force("y", d3.forceY(H / 2).strength(big ? 0.04 : 0.07))
+    .force("collide", d3.forceCollide(n => r(act(n.p)) + (big ? 0.5 : 2)).iterations(big ? 1 : 2))
+    .alphaDecay(big ? 0.04 : 0.0228)
+    .on("tick", netRender);
+  // vue initiale ajustée au nombre de nœuds
+  if (big) d3.select(canvas).call(zoom.transform, d3.zoomIdentity.translate(W / 2, H / 2).scale(0.45).translate(-W / 2, -H / 2));
+}
+
+// ---------- person panel ----------
+function showPerson(id) {
+  if (!id || !AGG.P.has(id)) return;
+  state.person = id;
+  const p = AGG.P.get(id), info = PEOPLE.get(id);
+  d3.select("#person").attr("hidden", null);
+  const h = d3.select("#p-name"); h.selectAll("*").remove(); h.text(info.name + " ");
+  if (info.idref) h.append("a").attr("class", "hint").attr("href", `https://www.idref.fr/${encodeURIComponent(info.idref)}`).attr("target", "_blank").attr("rel", "noopener").text("IdRef ↗");
+  const b = d3.select("#p-badges"); b.selectAll("*").remove();
+  [[p.aut.length ? p.aut.map(t => t.annee).join(", ") : "—", "thèse soutenue"], [nf(p.dir.length), "thèses dirigées"], [nf(p.jury.length), "jurys"]]
+    .forEach(([v, l]) => { const s = b.append("span").attr("class", "badge"); s.append("b").text(v); s.append("span").text(" " + l); });
+
+  // collaborateurs
+  const coll = new Map();
+  const ts = [...p.aut, ...p.dir, ...p.jury];
+  new Set(ts).forEach(t => [t.aut, ...t.dirs, ...t.jury].forEach(o => { if (o && o !== id) coll.set(o, (coll.get(o) || 0) + 1); }));
+  barList("#p-coll", [...coll].map(([cid, v]) => ({ id: cid, label: pname(cid), v })).sort((a, b) => b.v - a.v), { onClick: d => showPerson(d.id), n: 12 });
+
+  // descendance
+  drawTree(descendants(id));
+  // ascendance
+  const asc = d3.select("#p-asc"); asc.selectAll("*").remove();
+  const chain = []; let cur = id; const seen = new Set([id]);
+  while (AGG.parents.has(cur) && chain.length < 6) {
+    const ps = AGG.parents.get(cur).filter(x => !seen.has(x.id));
+    if (!ps.length) break;
+    chain.push(ps); ps.forEach(x => seen.add(x.id)); cur = ps[0].id;
+  }
+  if (!chain.length) asc.text("Aucun·e directeur·rice de thèse de cette personne dans le corpus filtré.");
+  else chain.forEach((ps, i) => {
+    const line = asc.append("div");
+    line.append("span").text(i === 0 ? "dirigé·e par " : "elle·lui-même dirigé·e par ");
+    ps.forEach((x, k) => {
+      if (k) line.append("span").text(" et ");
+      line.append("a").attr("href", "#").text(pname(x.id)).on("click", ev => { ev.preventDefault(); showPerson(x.id); });
+    });
+    line.append("span").text(` (${ps[0].t.annee})`);
+  });
+
+  // thèses
+  const rows = [...p.aut.map(t => ["Docteur·e", t]), ...p.dir.map(t => ["Direction", t]), ...p.jury.map(t => ["Jury", t])]
+    .sort((a, b) => b[1].annee - a[1].annee);
+  const tr = d3.select("#p-theses").selectAll("tr").data(rows).join("tr");
+  tr.selectAll("td").remove();
+  tr.append("td").text(d => d[0]);
+  tr.append("td").attr("class", "n").text(d => d[1].annee);
+  tr.append("td").append("a").attr("href", d => `https://theses.fr/${encodeURIComponent(d[1].nnt)}`).attr("target", "_blank").attr("rel", "noopener").text(d => d[1].titre || "(sans titre)");
+  tr.append("td").append("span").attr("class", "pl").text(d => d[1].aut ? pname(d[1].aut) : "").on("click", (ev, d) => showPerson(d[1].aut));
+  const dc = tr.append("td");
+  dc.each(function (d) {
+    const td = d3.select(this);
+    d[1].dirs.forEach((x, i) => { if (i) td.append("span").text(", "); td.append("span").attr("class", "pl").text(pname(x)).on("click", () => showPerson(x)); });
+  });
+
+  if (netHas(id)) netRender(); else drawNetwork();
+  d3.select("#who").property("value", info.name);
+  document.getElementById("person").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function drawTree(root) {
+  const host = d3.select("#p-tree"); host.selectAll("*").remove();
+  if (!root.children.length) { host.append("p").attr("class", "hint").text("Aucun·e docteur·e dirigé·e dans le corpus filtré."); return; }
+  const h = d3.hierarchy(root);
+  const dx = 18, dy = 240;
+  d3.tree().nodeSize([dx, dy])(h);
+  let x0 = Infinity, x1 = -Infinity; h.each(d => { x0 = Math.min(x0, d.x); x1 = Math.max(x1, d.x); });
+  const W = Math.max(host.node().clientWidth || 400, (h.height + 1) * dy + 60), H = x1 - x0 + dx * 2;
+  const svg = host.append("svg").attr("viewBox", `${-10} ${x0 - dx} ${W} ${H}`).style("min-width", W + "px").attr("class", "tree");
+  svg.append("g").selectAll("path").data(h.links()).join("path")
+    .attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
+  const n = svg.append("g").selectAll("g").data(h.descendants()).join("g").attr("transform", d => `translate(${d.y},${d.x})`);
+  const col = d => { const p = AGG.P.get(d.data.id); return css(ROLE_VAR[p ? roleOf(p) : "aut"]); };
+  n.append("circle").attr("r", 4).attr("fill", col).on("click", (ev, d) => showPerson(d.data.id));
+  n.append("text").attr("x", 7).attr("dy", "0.32em").text(d => pname(d.data.id)).on("click", (ev, d) => showPerson(d.data.id));
+  n.filter(d => d.data.t).append("text").attr("class", "yr").attr("x", -7).attr("dy", "0.32em").attr("text-anchor", "end").text(d => d.data.t.annee);
+}
+
+// ---------- update & controls ----------
+function update() {
+  aggregate();
+  drawSummary();
+  drawNetwork();
+  if (state.person && AGG.P.has(state.person)) showPersonQuiet(state.person);
+  else d3.select("#person").attr("hidden", true);
+}
+function showPersonQuiet(id) { const y = scrollY; showPerson(id); scrollTo(0, y); }
+
+function start(rows) {
+  prep(rows);
+  const [a, b] = d3.extent(THESES, t => t.annee);
+  state.y0 = a; state.y1 = b;
+  d3.select("#y0").attr("min", a).attr("max", b).property("value", a).on("change", function () { state.y0 = +this.value || a; update(); });
+  d3.select("#y1").attr("min", a).attr("max", b).property("value", b).on("change", function () { state.y1 = +this.value || b; update(); });
+  d3.selectAll(".grp").on("change", function () { this.checked ? state.groups.add(this.value) : state.groups.delete(this.value); update(); });
+  d3.selectAll(".lt").on("change", function () { this.checked ? state.ltypes.add(this.value) : state.ltypes.delete(this.value); drawNetwork(); });
+  d3.select("#nall").on("click", () => { state.nmax = Infinity; state.wmin = 1; d3.select("#wmin").property("value", 1); drawNetwork(); });
+  d3.select("#nmax").on("input", function () { d3.select("#nmax-v").text(`${nf(+this.value)} / ${nf(+this.max)}`); }).on("change", function () { state.nmax = +this.value; drawNetwork(); });
+  d3.select("#wmin").on("change", function () { state.wmin = Math.max(1, +this.value || 1); drawNetwork(); });
+  // recherche de personne
+  const byName = new Map();
+  const counts = new Map();
+  THESES.forEach(t => [t.aut, ...t.dirs, ...t.jury].forEach(id => id && counts.set(id, (counts.get(id) || 0) + 1)));
+  const sorted = [...counts].sort((x, y) => y[1] - x[1]);
+  sorted.forEach(([id]) => { const n = pname(id); if (!byName.has(n)) byName.set(n, id); });
+  d3.select("#people").selectAll("option").data([...byName.keys()]).join("option").attr("value", d => d);
+  d3.select("#who").on("change", function () { const id = byName.get(this.value.trim()); if (id) { showPerson(id); setTimeout(() => netFocus(id), 900); } });
+
+  d3.select("#loader").remove();
+  d3.select("#app").attr("hidden", null);
+  update();
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h && AGG.P.has(h)) { showPerson(h); setTimeout(() => netFocus(h), 900); }
+}
+let rT, lastW = innerWidth;
+addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { if (AGG && innerWidth !== lastW) { lastW = innerWidth; update(); } }, 250); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => AGG && update());
+
+d3.csv("thesesSIC.csv").then(start).catch(() => {
+  d3.select("#loaderr").attr("hidden", null);
+  d3.select("#file").on("change", function () {
+    const f = this.files[0]; if (!f) return;
+    f.text().then(t => start(d3.csvParse(t.replace(/^﻿/, ""))));
+  });
+});
+</script>
+</body>
+</html>

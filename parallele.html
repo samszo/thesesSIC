@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coordonnées parallèles SIC</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f3f0;
+  --surface-1: #fcfcfb;
+  --border: #e2e0da;
+  --grid: #ebe9e4;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7974;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --seq-lo: #b7d3f6;
+  --seq-hi: #0d366b;
+  --off: #d9d7d0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111110;
+    --surface-1: #1a1a19;
+    --border: #2e2e2c;
+    --grid: #262624;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --seq-lo: #184f95;
+    --seq-hi: #cde2fb;
+    --off: #323230;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111110;
+  --surface-1: #1a1a19;
+  --border: #2e2e2c;
+  --grid: #262624;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --seq-lo: #184f95;
+  --seq-hi: #cde2fb;
+  --off: #323230;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text-primary);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
+.sub { color: var(--text-secondary); margin: 0 0 16px; }
+nav { margin-bottom: 12px; font-size: 13px; }
+a { color: var(--series-1); }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 16px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin-bottom: 16px; }
+.controls label { color: var(--text-secondary); display: inline-flex; gap: 6px; align-items: center; }
+select, button {
+  font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface-1); color: var(--text-primary); cursor: pointer;
+}
+.count { font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+.count strong { color: var(--text-primary); font-size: 18px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.ramp { width: 120px; height: 10px; border-radius: 2px; display: inline-block; }
+svg { display: block; width: 100%; height: auto; }
+.axis text { fill: var(--text-muted); font-size: 11px; }
+.axis path, .axis line { stroke: var(--text-muted); }
+.axis .title { fill: var(--text-primary); font-size: 12px; font-weight: 600; }
+.axis text { paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round; }
+.lines path { fill: none; stroke-width: 1; mix-blend-mode: normal; }
+.brush .selection { fill: var(--text-muted); fill-opacity: .15; stroke: var(--text-primary); stroke-opacity: .6; }
+.hint { color: var(--text-muted); font-size: 12px; font-weight: 400; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; position: sticky; top: 0; background: var(--surface-1); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tablewrap { max-height: 480px; overflow: auto; }
+.scroll { overflow-x: auto; }
+#loader { padding: 40px; text-align: center; color: var(--text-secondary); }
+#app[hidden] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <nav><a href="index.html">← Tableau de bord</a> · <a href="relations.html">Relations →</a> · <a href="evolution.html">Évolution →</a></nav>
+  <h1>Coordonnées parallèles des thèses</h1>
+  <p class="sub">Chaque ligne est une thèse. Glissez le long d'un axe pour sélectionner un intervalle ; combinez plusieurs axes. Cliquez à côté d'une sélection pour l'effacer.</p>
+
+  <div id="loader">Chargement de thesesSIC.csv…
+    <p id="loaderr" hidden>Impossible de lire le fichier (ouvrez la page via le serveur web), ou choisissez-le ici :
+      <input type="file" id="file" accept=".csv"></p>
+  </div>
+
+  <div id="app" hidden>
+    <div class="controls">
+      <label>Couleur selon <select id="colorby"></select></label>
+      <button id="reset">Effacer les sélections</button>
+      <span class="count"><strong id="nsel">–</strong> thèses sélectionnées sur <span id="ntot">–</span></span>
+    </div>
+    <div class="card">
+      <div class="legend" id="legend"></div>
+      <div class="scroll"><div id="chart"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>Thèses sélectionnées <span class="hint" id="tabhint"></span></h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Année</th><th>Titre</th><th>Auteur</th><th>Établissement</th><th>Groupe</th><th>Dir.</th><th>Jury</th><th>Résumé (mots)</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const nf = d3.formatLocale({ decimal: ",", thousands: " ", grouping: [3], currency: ["", ""] }).format(",d");
+const norm = s => (s || "").replace(/’/g, "'").replace(/\s+/g, " ").trim().toLowerCase();
+function groupOf(disc) {
+  const n = norm(disc);
+  if (/\bstic\b|technolog|techniques? de l|^image, information/.test(n)) return "STIC";
+  if (/information,? (et )?(de la )?communication|information[- ]communication|information (et )?de la documentation/.test(n)) return "SIC";
+  return "Voisines";
+}
+const count = (r, prefix, field) => {
+  let n = 0;
+  for (let i = 0; i < 40; i++) {
+    const k = field ? `${prefix}.${i}.${field}` : `${prefix}.${i}`;
+    if (!(k in r)) break;
+    if ((r[k] || "").trim()) n++;
+  }
+  return n;
+};
+const words = s => (s || "").trim() ? s.trim().split(/\s+/).length : 0;
+
+let DATA = [], DIMS = [];
+const brushes = new Map(); // key -> [x0, x1] in pixels
+
+function prep(rows) {
+  const data = rows.map(r => ({
+    nnt: r.nnt,
+    titre: r["titres.fr"] || r["titres.en"] || "",
+    auteur: [r["auteur.prenom"], r["auteur.nom"]].filter(Boolean).join(" "),
+    annee: +((r.date_soutenance || "").slice(0, 4)) || null,
+    groupe: groupOf(r.discipline),
+    etab: (r["etablissements_soutenance.0.nom"] || "").trim() || "(inconnu)",
+    dirs: count(r, "directeurs_these", "nom"),
+    jury: count(r, "membres_jury", "nom"),
+    ram: count(r, "sujets_rameau"),
+    kw: count(r, "sujets.fr"),
+    titreMots: words(r["titres.fr"] || r["titres.en"]),
+    resume: words(r["resumes.fr"]),
+    acces: r.accessible === "oui" ? "oui" : "non",
+    cotut: count(r, "etablissements_cotutelle", "nom") > 0 ? "oui" : "non",
+  })).filter(d => d.annee);
+  // établissements : 12 plus fréquents + Autres
+  const top = d3.rollups(data, v => v.length, d => d.etab).sort((a, b) => b[1] - a[1]).slice(0, 12).map(d => d[0]);
+  const topSet = new Set(top);
+  data.forEach(d => d.etabAxe = topSet.has(d.etab) ? d.etab : "Autres");
+  return { data, etabs: [...top, "Autres"] };
+}
+
+function buildDims(etabs) {
+  const p99 = k => d3.quantile(DATA.map(d => d[k]).sort(d3.ascending), 0.99);
+  const lin = (key, label, max) => ({ key, label, type: "num", domain: [d3.min(DATA, d => d[key]), max ?? d3.max(DATA, d => d[key])] });
+  const cat = (key, label, domain) => ({ key, label, type: "cat", domain });
+  return [
+    lin("annee", "Année de soutenance"),
+    cat("groupe", "Groupe de disciplines", ["SIC", "Voisines", "STIC"]),
+    cat("etabAxe", "Établissement (12 premiers)", etabs),
+    lin("dirs", "Nombre de directeurs·rices"),
+    lin("jury", "Membres du jury"),
+    lin("ram", "Sujets RAMEAU"),
+    lin("kw", "Mots-clés auteur (fr)"),
+    lin("titreMots", "Longueur du titre (mots)", p99("titreMots")),
+    lin("resume", "Longueur du résumé (mots, plafonné au 99e centile)", p99("resume")),
+    cat("cotut", "Cotutelle", ["non", "oui"]),
+    cat("acces", "Accessible en ligne", ["non", "oui"]),
+  ];
+}
+
+const COLOR_OPTS = [
+  { key: "groupe", label: "Groupe de disciplines" },
+  { key: "annee", label: "Année" },
+  { key: "jury", label: "Membres du jury" },
+  { key: "resume", label: "Longueur du résumé" },
+  { key: "acces", label: "Accessible en ligne" },
+];
+let colorKey = "groupe";
+
+function colorScale() {
+  const dim = DIMS.find(d => d.key === colorKey);
+  if (colorKey === "groupe") {
+    const s = d3.scaleOrdinal(["SIC", "Voisines", "STIC"], [css("--series-1"), css("--series-2"), css("--series-3")]);
+    return { f: d => s(d.groupe), legend: s.domain().map(k => [k, s(k)]) };
+  }
+  if (dim.type === "cat") {
+    const s = d3.scaleOrdinal(dim.domain, [css("--series-1"), css("--series-2")]);
+    return { f: d => s(d[colorKey]), legend: dim.domain.map(k => [k, s(k)]) };
+  }
+  const s = d3.scaleSequential(dim.domain, d3.interpolateRgb(css("--seq-lo"), css("--seq-hi"))).clamp(true);
+  return { f: d => s(d[colorKey]), ramp: [s(dim.domain[0]), s(dim.domain[1])], domain: dim.domain };
+}
+
+let paths, xScales, selectedSet = null;
+function draw() {
+  const host = d3.select("#chart");
+  host.selectAll("*").remove();
+  const W = Math.max(640, host.node().parentNode.clientWidth), m = { t: 24, r: 24, b: 12, l: 24 };
+  const gap = 74, H = m.t + m.b + (DIMS.length - 1) * gap + 24;
+  const y = d3.scalePoint(DIMS.map(d => d.key), [m.t + 16, H - m.b - 8]);
+  xScales = new Map(DIMS.map(dim => [dim.key,
+    dim.type === "num"
+      ? d3.scaleLinear(dim.domain, [m.l, W - m.r]).clamp(true)
+      : d3.scalePoint(dim.domain, [m.l, W - m.r]).padding(dim.domain.length > 3 ? 0.3 : 0.6)]));
+  // léger décalage vertical aléatoire stable pour les axes catégoriels, pour distinguer les faisceaux
+  const line = d3.line().defined(([, v]) => v != null).x(([k, v]) => xScales.get(k)(v)).y(([k]) => y(k));
+
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).style("min-width", "640px")
+    .attr("role", "img").attr("aria-label", "Coordonnées parallèles des thèses");
+  const col = colorScale();
+  paths = svg.append("g").attr("class", "lines").selectAll("path").data(DATA).join("path")
+    .attr("d", d => line(DIMS.map(dim => [dim.key, d[dim.key]])))
+    .attr("stroke", col.f).attr("stroke-opacity", 0.35);
+
+  const brushH = 28;
+  const axes = svg.append("g").selectAll("g").data(DIMS).join("g")
+    .attr("class", "axis").attr("transform", d => `translate(0,${y(d.key)})`);
+  axes.each(function (dim) {
+    const g = d3.select(this), x = xScales.get(dim.key);
+    const ax = d3.axisBottom(x).tickSizeOuter(0);
+    if (dim.type === "num") ax.ticks(Math.min(10, W / 90)).tickFormat(dim.key === "annee" ? d3.format("d") : nf);
+    g.call(ax);
+    if (dim.type === "cat" && dim.domain.length > 4) {
+      const maxCh = Math.max(6, Math.floor(x.step() / 6.5));
+      g.selectAll(".tick text").text(t => t.length > maxCh ? t.slice(0, maxCh - 1) + "…" : t).append("title").text(t => t);
+    }
+    g.append("text").attr("class", "title").attr("text-anchor", "start").attr("x", m.l).attr("y", -12).text(dim.label);
+    const brush = d3.brushX().extent([[m.l - 4, -brushH / 2], [W - m.r + 4, brushH / 2]])
+      .on("start brush end", ({ type, selection }) => {
+        if (selection) brushes.set(dim.key, selection); else brushes.delete(dim.key);
+        applySelection(type === "end");
+      });
+    const bg = g.append("g").attr("class", "brush").call(brush);
+    if (brushes.has(dim.key)) bg.call(brush.move, brushes.get(dim.key));
+  });
+
+  drawLegend(col);
+  applySelection();
+}
+
+function drawLegend(col) {
+  const lg = d3.select("#legend");
+  lg.selectAll("*").remove();
+  const label = COLOR_OPTS.find(o => o.key === colorKey).label;
+  lg.append("span").text(label + " :");
+  if (col.legend) col.legend.forEach(([k, c]) => { const s = lg.append("span"); s.append("span").attr("class", "sw").style("background", c); s.append("span").text(k); });
+  else {
+    const s = lg.append("span");
+    const lf = colorKey === "annee" ? String : nf;
+    s.append("span").text(lf(col.domain[0]));
+    s.append("span").attr("class", "ramp").style("background", `linear-gradient(to right, ${col.ramp[0]}, ${col.ramp[1]})`);
+    s.append("span").text(lf(col.domain[1]) + (colorKey === "resume" ? " +" : ""));
+  }
+  const o = lg.append("span");
+  o.append("span").attr("class", "sw").style("background", css("--off"));
+  o.append("span").text("hors sélection");
+}
+
+function isSelected(d) {
+  for (const [key, [x0, x1]] of brushes) {
+    const v = xScales.get(key)(d[key]);
+    if (v == null || v < x0 || v > x1) return false;
+  }
+  return true;
+}
+
+let tableT;
+function applySelection(raise = true) {
+  const col = colorScale(), off = css("--off");
+  const sel = [];
+  paths.each(function (d) {
+    const ok = isSelected(d);
+    if (ok) sel.push(d);
+    this.setAttribute("stroke", ok ? col.f(d) : off);
+    this.setAttribute("stroke-opacity", ok ? (brushes.size ? 0.6 : 0.35) : 0.25);
+  });
+  if (raise) paths.filter(isSelected).raise(); // lignes sélectionnées au premier plan
+  d3.select("#nsel").text(nf(sel.length));
+  clearTimeout(tableT);
+  tableT = setTimeout(() => drawTable(sel), 120);
+}
+
+function drawTable(rows) {
+  const shown = rows.slice().sort((a, b) => b.annee - a.annee).slice(0, 300);
+  d3.select("#tabhint").text(rows.length > shown.length ? `· ${nf(shown.length)} premières sur ${nf(rows.length)}` : `· ${nf(rows.length)}`);
+  const tr = d3.select("#tbody").selectAll("tr").data(shown, d => d.nnt).join("tr");
+  tr.selectAll("td").remove();
+  tr.append("td").attr("class", "n").text(d => d.annee);
+  tr.append("td").append("a").attr("href", d => `https://theses.fr/${encodeURIComponent(d.nnt)}`).attr("target", "_blank").attr("rel", "noopener").text(d => d.titre || "(sans titre)");
+  tr.append("td").text(d => d.auteur);
+  tr.append("td").text(d => d.etab);
+  tr.append("td").text(d => d.groupe);
+  tr.append("td").attr("class", "n").text(d => d.dirs);
+  tr.append("td").attr("class", "n").text(d => d.jury);
+  tr.append("td").attr("class", "n").text(d => nf(d.resume));
+}
+
+function start(rows) {
+  const { data, etabs } = prep(rows);
+  DATA = data;
+  DIMS = buildDims(etabs);
+  d3.select("#ntot").text(nf(DATA.length));
+  d3.select("#colorby").selectAll("option").data(COLOR_OPTS).join("option")
+    .attr("value", o => o.key).property("selected", o => o.key === colorKey).text(o => o.label);
+  d3.select("#colorby").on("change", function () { colorKey = this.value; drawLegend(colorScale()); applySelection(); });
+  d3.select("#reset").on("click", () => { brushes.clear(); draw(); });
+  d3.select("#loader").remove();
+  d3.select("#app").attr("hidden", null);
+  draw();
+}
+
+let rT, lastW = innerWidth;
+addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { if (DATA.length && innerWidth !== lastW) { lastW = innerWidth; brushes.clear(); draw(); } }, 200); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => DATA.length && draw());
+
+d3.csv("thesesSIC.csv").then(start).catch(() => {
+  d3.select("#loaderr").attr("hidden", null);
+  d3.select("#file").on("change", function () {
+    const f = this.files[0]; if (!f) return;
+    f.text().then(t => start(d3.csvParse(t.replace(/^﻿/, ""))));
+  });
+});
+</script>
+</body>
+</html>
